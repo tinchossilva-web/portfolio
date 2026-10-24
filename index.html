@@ -6,6 +6,9 @@
 <meta name="theme-color" content="#080b09">
 <meta name="description" content="Martín Silva — Diseño Industrial. Portfolio personal.">
 <title>Martín Silva — Diseño Industrial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@900&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #080b09;
@@ -61,773 +64,212 @@ body{
 a{color:inherit;text-decoration:none}
 .wrap{width:min(1380px,calc(100% - 48px));margin:auto;position:relative;z-index:2}
 
-/* CANVAS DE LA MEDUSA (Pantalla completa, fijo) */
+/* CANVAS DE LA MEDUSA */
 #jellyfishCanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 1;
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 1;
 }
 
-/* CANVAS DE LAS ALGAS (Anclado al fondo del documento) */
-#algaeCanvas {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 650px;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.20; /* Opacidad bajada al 20% */
-}
-
-/* FLASH OVERLAY (CAMBIO DE TEMA) */
+/* OVERLAYS */
 .flash-wave-overlay {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0;
+  position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: 0;
   background: radial-gradient(circle at center, rgba(255, 255, 255, 0.9) 0%, rgba(200, 220, 205, 0.5) 40%, transparent 80%);
-  mix-blend-mode: overlay;
-  transition: opacity 2s cubic-bezier(0.1, 0.8, 0.2, 1), transform 2s cubic-bezier(0.1, 0.8, 0.2, 1);
+  mix-blend-mode: overlay; transition: opacity 2s cubic-bezier(0.1, 0.8, 0.2, 1), transform 2s cubic-bezier(0.1, 0.8, 0.2, 1);
   transform: scale(0.5);
 }
-.flash-wave-overlay.triggering {
-  opacity: 1;
-  transform: scale(2.8);
-}
+.flash-wave-overlay.triggering { opacity: 1; transform: scale(2.8); }
 
-/* OVERLAY DE PANTALLA COMPLETA - TRANSICIÓN ENTRE PÁGINAS */
 #glassTransitionOverlay {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 100vw;
-  height: 100vh;
-  z-index: 9990;
-  pointer-events: none;
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  opacity: 0;
-  background: rgba(220, 235, 219, 0.08);
-  backdrop-filter: blur(40px) saturate(160%);
-  -webkit-backdrop-filter: blur(40px) saturate(160%);
-  border: 1px solid var(--glass-border-hover);
-  box-shadow: 0 0 80px rgba(0,0,0,0.3);
+  position: fixed; top: 50%; left: 50%; width: 100vw; height: 100vh; z-index: 9990;
+  pointer-events: none; border-radius: 50%; transform: translate(-50%, -50%) scale(0);
+  opacity: 0; background: rgba(220, 235, 219, 0.08);
+  backdrop-filter: blur(40px) saturate(160%); -webkit-backdrop-filter: blur(40px) saturate(160%);
+  border: 1px solid var(--glass-border-hover); box-shadow: 0 0 80px rgba(0,0,0,0.3);
   transition: transform 0.8s cubic-bezier(0.7, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.7, 0, 0.2, 1), border-radius 0.8s cubic-bezier(0.7, 0, 0.2, 1);
 }
+#glassTransitionOverlay.active { pointer-events: auto; transform: translate(-50%, -50%) scale(1.6); opacity: 1; border-radius: 0%; }
 
-#glassTransitionOverlay.active {
-  pointer-events: auto;
-  transform: translate(-50%, -50%) scale(1.6);
-  opacity: 1;
-  border-radius: 0%;
-}
-
-/* ACCENT LIQUID GLASS REFINADO */
+/* ACCENT LIQUID GLASS */
 .liquid-glass {
-  background: var(--glass-bg);
-  backdrop-filter: blur(14px) saturate(130%);
-  -webkit-backdrop-filter: blur(14px) saturate(130%);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  border-radius: 24px;
+  background: var(--glass-bg); backdrop-filter: blur(14px) saturate(130%); -webkit-backdrop-filter: blur(14px) saturate(130%);
+  border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); border-radius: 24px;
   transition: var(--trans-base), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
 }
+.liquid-glass:hover { background: var(--glass-bg-hover); border-color: var(--glass-border-hover); }
 
-.liquid-glass:hover {
-  background: var(--glass-bg-hover);
-  border-color: var(--glass-border-hover);
-}
-
-/* HEADER MINIMALISTA & DESPLEGABLE MÓVIL */
+/* HEADER */
 header {
-  height: 70px;
-  display: flex;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  border-bottom: 1px solid var(--line);
-  background: rgba(8, 11, 9, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  transition: var(--trans-base);
+  height: 70px; display: flex; align-items: center; position: sticky; top: 0; z-index: 100;
+  border-bottom: 1px solid var(--line); background: rgba(8, 11, 9, 0.75);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); transition: var(--trans-base);
 }
-
-[data-theme="light"] header {
-  background: rgba(246, 247, 244, 0.8);
-}
-
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
+[data-theme="light"] header { background: rgba(246, 247, 244, 0.8); }
+.header-container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
 .wordmark{font-size:15px;font-weight:650;letter-spacing:-.045em;min-height:44px;display:inline-flex;align-items:center;}
 .wordmark span{color:var(--accent-light)}
-
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-nav.desktop-nav {
-  display: flex;
-  gap: 28px;
-  color: var(--muted);
-  font-size: 12px;
-  align-items: center;
-}
-
-nav.desktop-nav a {
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-}
-
+.nav-actions { display: flex; align-items: center; gap: 16px; }
+nav.desktop-nav { display: flex; gap: 28px; color: var(--muted); font-size: 12px; align-items: center; }
+nav.desktop-nav a { min-height: 44px; display: inline-flex; align-items: center; }
 nav.desktop-nav a:hover, .text-link:hover { color: var(--text); }
 
-/* TOGGLE BOTÓN SUTIL */
 .theme-btn {
-  background: transparent;
-  border: 1px solid var(--line);
-  color: var(--text);
-  padding: 8px 16px;
-  min-height: 44px;
-  border-radius: 22px;
-  font-size: 11px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.25s ease, var(--trans-base);
+  background: transparent; border: 1px solid var(--line); color: var(--text); padding: 8px 16px;
+  min-height: 44px; border-radius: 22px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+  cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all 0.25s ease, var(--trans-base);
 }
-.theme-btn:hover {
-  border-color: var(--glass-border-hover);
-  background: rgba(220, 235, 219, 0.05);
-}
-.theme-btn svg {
-  width: 14px;
-  height: 14px;
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-/* BOTÓN HAMBURGUESA */
+.theme-btn:hover { border-color: var(--glass-border-hover); background: rgba(220, 235, 219, 0.05); }
+.theme-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .menu-toggle {
-  display: none;
-  background: transparent;
-  border: 1px solid var(--line);
-  color: var(--text);
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 101;
-  transition: all 0.2s ease;
+  display: none; background: transparent; border: 1px solid var(--line); color: var(--text);
+  width: 44px; height: 44px; border-radius: 12px; align-items: center; justify-content: center; cursor: pointer; z-index: 101; transition: all 0.2s ease;
 }
-.menu-toggle:hover {
-  border-color: var(--glass-border-hover);
-  background: rgba(220, 235, 219, 0.05);
-}
-.menu-toggle svg {
-  width: 20px;
-  height: 20px;
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
+.menu-toggle:hover { border-color: var(--glass-border-hover); background: rgba(220, 235, 219, 0.05); }
+.menu-toggle svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-/* MENÚ DESPLEGABLE MOBILE */
 .mobile-menu {
-  display: none;
-  position: fixed;
-  top: 70px;
-  left: 0;
-  right: 0;
-  background: var(--bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--line);
-  padding: 24px 24px 32px;
-  flex-direction: column;
-  gap: 16px;
-  z-index: 99;
-  transform: translateY(-10px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: none; position: fixed; top: 70px; left: 0; right: 0; background: var(--bg);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--line);
+  padding: 24px 24px 32px; flex-direction: column; gap: 16px; z-index: 99; transform: translateY(-10px);
+  opacity: 0; pointer-events: none; transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
+.mobile-menu.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.mobile-menu a { font-size: 16px; font-weight: 500; color: var(--muted); padding: 12px 16px; border-radius: 12px; min-height: 48px; display: flex; align-items: center; transition: background 0.2s ease, color 0.2s ease; }
+.mobile-menu a:hover, .mobile-menu a:active { background: rgba(220, 235, 219, 0.06); color: var(--text); }
 
-.mobile-menu.open {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-.mobile-menu a {
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--muted);
-  padding: 12px 16px;
-  border-radius: 12px;
-  min-height: 48px;
-  display: flex;
-  align-items: center;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.mobile-menu a:hover, .mobile-menu a:active {
-  background: rgba(220, 235, 219, 0.06);
-  color: var(--text);
-}
-
-/* HERO EDITORIAL */
-.hero {
-  min-height: calc(100vh - 120px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 48px 0 32px;
-  position: relative;
-}
+/* HERO */
+.hero { min-height: calc(100vh - 120px); display: flex; flex-direction: column; justify-content: center; padding: 48px 0 32px; position: relative; }
 .eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-
-.hero-copy {
-  display: block;
-  position: relative;
-  margin-top: 24px;
-}
-
+.hero-copy { display: block; position: relative; margin-top: 24px; }
 h1{font-size:clamp(48px, 12vw, 210px);line-height:.85;letter-spacing:-.085em;font-weight:500;margin:16px 0 24px;word-break:break-word;}
 h1 span{color:var(--accent-green)}
 .intro{font-size:clamp(15px, 1.6vw, 18px);color:var(--muted);max-width:380px;line-height:1.6;margin:0;}
 .hero-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:40px;gap:20px}
 .scroll-note{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
-
-.text-link{
-  font-size:13px;
-  border-bottom:1px solid var(--accent-light);
-  padding-bottom:4px;
-  transition:color .2s, border-color .2s;
-  cursor: pointer;
-  background: transparent;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  color: inherit;
-  font-family: inherit;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 44px;
-}
-.text-link svg {
-  width: 14px;
-  height: 14px;
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: transform 0.25s ease;
-}
+.intro{color:var(--accent-light)}
+.text-link{ font-size:13px; border-bottom:1px solid var(--accent-light); padding-bottom:4px; transition:color .2s, border-color .2s; cursor: pointer; background: transparent; border-top: none; border-left: none; border-right: none; color: inherit; font-family: inherit; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; }
+.text-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.25s ease; }
 .text-link:hover{color:var(--text); border-color: var(--text);}
-.text-link:hover svg {
-  transform: translate(2px, -2px);
-}
-.text-link.back-btn:hover svg {
-  transform: translateX(-3px);
-}
+.text-link:hover svg { transform: translate(2px, -2px); }
+.text-link.back-btn:hover svg { transform: translateX(-3px); }
 
 /* HERO DASHBOARD */
-.hero-dashboard {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  margin-top: 48px;
-  width: 100%;
-}
+.hero-dashboard { display: flex; flex-direction: column; gap: 24px; margin-top: 48px; width: 100%; }
+.hero-academic { padding: 24px 32px; border-radius: 20px; }
+.academic-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; width: 100%; }
+.academic-item { display: flex; flex-direction: column; justify-content: center; }
+.academic-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px; color: var(--muted); letter-spacing: -0.01em; }
+.academic-header strong { color: var(--text); font-weight: 500; }
+.progress-track { display: flex; gap: 6px; height: 5px; }
+.progress-segment { flex: 1; background: var(--seg-empty); border-radius: 3px; transition: background 0.3s ease; }
+.progress-segment.filled { background: var(--accent-light); box-shadow: 0 0 10px rgba(131, 154, 132, 0.25); }
+[data-theme="light"] .progress-segment.filled { box-shadow: 0 0 10px rgba(62, 90, 66, 0.25); }
+@keyframes pulse-level { 0%, 100% { background: var(--seg-empty); box-shadow: none; opacity: 0.5; } 50% { background: var(--accent-light); box-shadow: 0 0 12px var(--seg-glow); opacity: 1; } }
+.progress-segment.blinking-level { animation: pulse-level 2s infinite ease-in-out; }
 
-.hero-academic {
-  padding: 24px 32px;
-  border-radius: 20px;
-}
-
-.academic-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 32px;
-  width: 100%;
-}
-
-.academic-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.academic-header {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  margin-bottom: 8px;
-  color: var(--muted);
-  letter-spacing: -0.01em;
-}
-.academic-header strong {
-  color: var(--text);
-  font-weight: 500;
-}
-.progress-track {
-  display: flex;
-  gap: 6px;
-  height: 5px;
-}
-.progress-segment {
-  flex: 1;
-  background: var(--seg-empty);
-  border-radius: 3px;
-  transition: background 0.3s ease;
-}
-.progress-segment.filled {
-  background: var(--accent-light);
-  box-shadow: 0 0 10px rgba(131, 154, 132, 0.25);
-}
-[data-theme="light"] .progress-segment.filled {
-  box-shadow: 0 0 10px rgba(62, 90, 66, 0.25);
-}
-
-@keyframes pulse-level {
-  0%, 100% { background: var(--seg-empty); box-shadow: none; opacity: 0.5; }
-  50% { background: var(--accent-light); box-shadow: 0 0 12px var(--seg-glow); opacity: 1; }
-}
-.progress-segment.blinking-level {
-  animation: pulse-level 2s infinite ease-in-out;
-}
-
-/* SKILLS EN HERO */
-.hero-skills {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 12px;
-  width: 100%;
-}
-
-.hero-skill-card {
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border-radius: 16px;
-  transition: transform 0.3s ease, background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
-  cursor: default;
-}
-
-.hero-skill-card:hover {
-  transform: translateY(-4px);
-}
-
-.hero-skill-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  background: rgba(220, 235, 219, 0.05);
-  border: 1px solid var(--line);
-  color: var(--text);
-}
-
-.hero-skill-icon svg {
-  width: 20px;
-  height: 20px;
-  fill: currentColor;
-}
-
-.hero-skill-info h3 {
-  margin: 0 0 2px;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-}
-
-.stars {
-  display: flex;
-  gap: 3px;
-  color: var(--muted);
-}
-
-.star-icon {
-  width: 11px;
-  height: 11px;
-  fill: currentColor;
-  opacity: 0.25;
-  transition: opacity 0.3s ease, color 0.3s ease;
-}
-
-.star-icon.filled {
-  opacity: 1;
-  color: var(--accent-light);
-}
-
-.star-icon.half {
-  opacity: 1; 
-  color: var(--muted);
-}
-.star-icon.half .filled-half {
-  color: var(--accent-light);
-}
+/* SKILLS */
+.hero-skills { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; width: 100%; }
+.hero-skill-card { padding: 10px 16px; display: flex; align-items: center; gap: 12px; border-radius: 16px; transition: transform 0.3s ease, background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease; cursor: default; }
+.hero-skill-card:hover { transform: translateY(-4px); }
+.hero-skill-icon { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 8px; background: rgba(220, 235, 219, 0.05); border: 1px solid var(--line); color: var(--text); }
+.hero-skill-icon svg { width: 20px; height: 20px; fill: currentColor; }
+.hero-skill-info h3 { margin: 0 0 2px; font-size: 13px; font-weight: 500; letter-spacing: -0.01em; }
+.stars { display: flex; gap: 3px; color: var(--muted); }
+.star-icon { width: 11px; height: 11px; fill: currentColor; opacity: 0.25; transition: opacity 0.3s ease, color 0.3s ease; }
+.star-icon.filled { opacity: 1; color: var(--accent-light); }
+.star-icon.half { opacity: 1; color: var(--muted); }
+.star-icon.half .filled-half { color: var(--accent-light); }
 
 /* SECCIONES & CARDS */
 .section-head{display:flex;justify-content:space-between;align-items:baseline;padding:24px 0;border-top:1px solid var(--line);color:var(--muted);transition:var(--trans-base)}
 .section-head h2{font-weight:450;font-size:14px;letter-spacing:-.02em;margin:0;color:var(--text)}
 .section-head span{font-size:11px;color:var(--muted)}
-
 .projects{padding:24px 0 60px}
-.project-card {
-  padding: clamp(24px, 5vw, 48px);
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 24px;
-}
+.project-card { padding: clamp(24px, 5vw, 48px); margin-top: 20px; display: flex; flex-direction: column; gap: 20px; position: relative; overflow: hidden; border-radius: 24px; }
+.project-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; }
+.project-title h3 { font-size: clamp(24px, 5vw, 48px); font-weight: 450; letter-spacing: -.04em; line-height: 1.1; margin: 10px 0 8px; }
+.project-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.tag { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; padding: 6px 12px; border-radius: 20px; background: rgba(220, 235, 219, 0.05); border: 1px solid var(--line); color: var(--muted); }
+.project-desc { color: var(--muted); font-size: clamp(14px, 1.4vw, 16px); max-width: 680px; line-height: 1.6; }
+.project-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 16px; border-top: 1px solid var(--line); }
 
-.project-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  gap: 16px;
-}
+/* VISTAS DETALLE */
+.late-call-brand-word, .late-call-card-word { font-family: "Alegreya Sans", var(--sans); font-weight: 900; letter-spacing: -.025em; }
+#project-late-call .project-text-content h3 { font-family: var(--sans); font-weight: 500; }
+.page-view { display: block; }
+.page-view.hidden { display: none; }
+.project-detail-hero { padding: 32px 0 80px; }
+.back-btn { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+.project-layout { display: grid; grid-template-columns: 1fr 340px; gap: 80px; margin: 48px 0; align-items: start; }
+.project-text-content { font-size: clamp(16px, 1.8vw, 18px); line-height: 1.7; color: var(--muted); }
+.project-text-content h3 { color: var(--text); font-size: clamp(20px, 2.5vw, 24px); font-weight: 500; margin: 48px 0 16px; letter-spacing: -0.02em; }
+.project-text-content p { margin-bottom: 24px; }
+.project-specs { display: flex; flex-direction: column; gap: 16px; }
+.tech-card { padding: 24px; border-radius: 20px; }
+.tech-card h4 { margin: 0 0 10px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-light); }
+.tech-card p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.5; }
 
-.project-title h3 {
-  font-size: clamp(24px, 5vw, 48px);
-  font-weight: 450;
-  letter-spacing: -.04em;
-  line-height: 1.1;
-  margin: 10px 0 8px;
-}
+/* CARRUSEL Y GRILLAS */
+.gallery-section { margin-top: 80px; }
+.image-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 32px; }
+.carousel-container { display: flex; align-items: center; gap: 20px; margin-top: 24px; position: relative; }
+.carousel-track { display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; padding: 10px 0; width: 100%; }
+.carousel-track::-webkit-scrollbar { display: none; }
+.carousel-slide-wrapper { flex: 0 0 calc(45% - 12px); scroll-snap-align: start; display: flex; flex-direction: column; gap: 12px; }
+.carousel-slide { width: 100%; aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; color: var(--muted); overflow: hidden; position: relative; }
+.carousel-slide.portrait { aspect-ratio: 3 / 4; }
+.carousel-slide svg { width: 32px; height: 32px; opacity: 0.5; }
+.slide-caption { font-size: 13px; color: var(--muted); letter-spacing: 0.02em; }
+.slide-caption strong { color: var(--text); font-weight: 500; }
+.carousel-btn { background: transparent; border: 1px solid var(--line); color: var(--text); width: 48px; height: 48px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--trans-base); flex-shrink: 0; }
+.carousel-btn:hover { border-color: var(--glass-border-hover); background: rgba(220, 235, 219, 0.05); }
+.carousel-btn svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; }
 
-.project-tags {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 12px;
-}
+/* ZONA ESPECIAL ROSA (LATE CALL) */
+.pink-transition-zone { margin-top: 80px; padding: 80px 0; position: relative; transition: background-color 1s ease; }
+.pink-transition-zone::before { content: ''; position: absolute; top: 0; left: -50vw; right: -50vw; bottom: 0; background: linear-gradient(to bottom, transparent 0%, rgba(227, 132, 165, 0.12) 35%, rgba(227, 132, 165, 0.06) 100%); pointer-events: none; z-index: -1; }
+[data-theme="light"] .pink-transition-zone::before { background: linear-gradient(to bottom, transparent 0%, rgba(227, 132, 165, 0.08) 35%, transparent 100%); }
+.pink-text { color: #e384a5 !important; }
+.pink-glass { border-color: rgba(227, 132, 165, 0.2) !important; box-shadow: 0 16px 40px rgba(227, 132, 165, 0.08) !important; }
+.pink-glass:hover { border-color: rgba(227, 132, 165, 0.4) !important; background: rgba(227, 132, 165, 0.05) !important; }
 
-.tag {
-  font-size: 10px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  padding: 6px 12px;
-  border-radius: 20px;
-  background: rgba(220, 235, 219, 0.05);
-  border: 1px solid var(--line);
-  color: var(--muted);
-}
+/* MOCKUP IMG CROP (Para recortes limpios de UI) */
+.mockup-img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.15); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.carousel-slide:hover .mockup-img { transform: scale(1.2); }
 
-.project-desc {
-  color: var(--muted);
-  font-size: clamp(14px, 1.4vw, 16px);
-  max-width: 680px;
-  line-height: 1.6;
-}
+/* ZONA GRIS (CARTÓN) */
+.gray-transition-zone { position: relative; padding: 80px 0; margin-top: 40px; }
+.gray-transition-zone::before { content: ''; position: absolute; top: 0; left: -50vw; right: -50vw; bottom: 0; background: linear-gradient(to bottom, transparent 0%, rgba(140, 145, 145, 0.12) 30%, rgba(140, 145, 145, 0.08) 100%); pointer-events: none; z-index: -1; }
+[data-theme="light"] .gray-transition-zone::before { background: linear-gradient(to bottom, transparent 0%, rgba(140, 145, 145, 0.08) 30%, transparent 100%); }
+.gray-glass { border-color: rgba(200, 205, 205, 0.15) !important; }
+.gray-glass:hover { border-color: rgba(200, 205, 205, 0.25) !important; background: rgba(200, 205, 205, 0.05) !important; }
 
-.project-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 12px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line);
+/* ZONA VIBRANTE EXTREMA (POSTERS) */
+@keyframes fluidGradients { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+.vibrant-zone { position: relative; padding: 60px 0 100px; margin-top: 40px; }
+.vibrant-zone::before {
+  content: ''; position: absolute; top: 0; left: -50vw; right: -50vw; bottom: 0;
+  background: radial-gradient(circle at 10% 20%, rgba(255, 0, 128, 0.25) 0%, transparent 45%), radial-gradient(circle at 90% 10%, rgba(0, 255, 255, 0.25) 0%, transparent 45%), radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.3) 0%, transparent 45%), radial-gradient(circle at 20% 80%, rgba(255, 255, 0, 0.15) 0%, transparent 45%), radial-gradient(circle at 50% 50%, rgba(56, 182, 255, 0.2) 0%, transparent 60%);
+  pointer-events: none; z-index: -1; filter: blur(30px);
 }
+[data-theme="light"] .vibrant-zone::before { opacity: 0.9; }
+.vibrant-glass { border-color: rgba(255, 255, 255, 0.2) !important; background: rgba(20, 20, 30, 0.4) !important; backdrop-filter: blur(25px) saturate(180%); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2) !important; }
+.vibrant-glass:hover { border-color: rgba(255, 255, 255, 0.5) !important; background: rgba(30, 30, 45, 0.6) !important; box-shadow: 0 16px 40px rgba(0, 255, 255, 0.15), 0 -16px 40px rgba(255, 0, 128, 0.15) !important; }
+.glitch-text { background: linear-gradient(to right, #ff007f, #00e5ff, #8a2be2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 20px rgba(0, 229, 255, 0.2); }
+.carousel-slide-wrapper.large-poster { flex: 0 0 240px; } 
+.carousel-slide.portrait-large { aspect-ratio: 2 / 3; max-height: 55vh; } 
 
-/* VISTA DETALLE PROYECTO (DISEÑO EDITORIAL NUEVO) */
-.page-view {
-  display: block;
-}
-.page-view.hidden {
-  display: none;
-}
-
-.project-detail-hero {
-  padding: 32px 0 80px;
-}
-
-.back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 24px;
-}
-
-/* Grid Editorial del Proyecto */
-.project-layout {
-  display: grid;
-  grid-template-columns: 1fr 340px;
-  gap: 80px;
-  margin: 48px 0;
-  align-items: start;
-}
-
-.project-text-content {
-  font-size: clamp(16px, 1.8vw, 18px);
-  line-height: 1.7;
-  color: var(--muted);
-}
-
-.project-text-content h3 {
-  color: var(--text);
-  font-size: clamp(20px, 2.5vw, 24px);
-  font-weight: 500;
-  margin: 48px 0 16px;
-  letter-spacing: -0.02em;
-}
-
-.project-text-content p {
-  margin-bottom: 24px;
-}
-
-/* Especificaciones Técnicas a la derecha */
-.project-specs {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.tech-card {
-  padding: 24px;
-  border-radius: 20px;
-}
-.tech-card h4 {
-  margin: 0 0 10px;
-  font-size: 11px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--accent-light);
-}
-.tech-card p {
-  margin: 0;
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.5;
-}
-
-/* CARRUSEL DE RENDERS */
-.gallery-section {
-  margin-top: 80px;
-}
-
-.carousel-container {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-top: 24px;
-  position: relative;
-}
-
-.carousel-track {
-  display: flex;
-  gap: 24px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  scrollbar-width: none; /* Oculta en Firefox */
-  padding: 10px 0; /* Espacio para la sombra */
-  width: 100%;
-}
-
-.carousel-track::-webkit-scrollbar {
-  display: none; /* Oculta en Chrome/Safari */
-}
-
-.carousel-slide-wrapper {
-  flex: 0 0 calc(45% - 12px);
-  scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.carousel-slide {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--muted);
-}
-
-.carousel-slide svg {
-  width: 32px;
-  height: 32px;
-  opacity: 0.5;
-}
-
-.slide-caption {
-  font-size: 13px;
-  color: var(--muted);
-  letter-spacing: 0.02em;
-}
-.slide-caption strong {
-  color: var(--text);
-  font-weight: 500;
-}
-
-.carousel-btn {
-  background: transparent;
-  border: 1px solid var(--line);
-  color: var(--text);
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: var(--trans-base);
-  flex-shrink: 0;
-}
-.carousel-btn:hover {
-  border-color: var(--glass-border-hover);
-  background: rgba(220, 235, 219, 0.05);
-}
-.carousel-btn svg {
-  width: 20px; height: 20px;
-  fill: none; stroke: currentColor; stroke-width: 1.5;
-}
-
-/* ESTILOS DEL MINIJUEGO "FIND THE JELLY" (ESTÉTICA INTEGRADA) */
-.game-container {
-  background: var(--bg2);
-  width: 100%;
-  height: 65vh;
-  min-height: 400px;
-  border-radius: 24px;
-  position: relative;
-  overflow: hidden;
-  margin: 32px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid var(--glass-border);
-  box-shadow: inset 0 0 80px rgba(0,0,0,0.2), 0 20px 60px rgba(0,0,0,0.4);
-  font-family: var(--sans);
-}
-
-#game-title {
-  color: var(--text);
-  font-weight: 500;
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  margin-top: 32px;
-  z-index: 2;
-  text-align: center;
-}
-
-#game-feedback {
-  font-size: 13px;
-  letter-spacing: 0.3em;
-  color: var(--muted);
-  height: 20px;
-  margin-top: 12px;
-  z-index: 2;
-  font-weight: 600;
-  transition: color 0.3s ease;
-}
-
-#game-area {
-  position: absolute;
-  inset: 0;
-  cursor: crosshair;
-  z-index: 1;
-}
-
-#gameCanvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-#game-pearl {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  background: var(--text);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 24px 12px var(--seg-glow), inset 0 0 4px #fff;
-  pointer-events: none;
-  display: none;
-  z-index: 4;
-}
-
-#game-pearl.visible { 
-  display: block; 
-  animation: popReveal 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-}
-
-@keyframes popReveal { 
-  from { transform: translate(-50%, -50%) scale(0); opacity: 0; } 
-  to { transform: translate(-50%, -50%) scale(1); opacity: 1; } 
-}
-
-#game-win-screen {
-  position: absolute;
-  inset: 0;
-  background: var(--bg2);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.6s ease;
-}
-
-#game-win-screen.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-#game-quote {
-  font-size: clamp(16px, 3vw, 24px);
-  letter-spacing: 0.02em;
-  font-weight: 400;
-  color: var(--text);
-  margin-bottom: 32px;
-  text-align: center;
-  max-width: 80%;
-  line-height: 1.5;
-}
-#game-quote span {
-  color: var(--accent-light);
-}
+/* JUEGO MEDUSA */
+.game-container { background: var(--bg2); width: 100%; height: 65vh; min-height: 400px; border-radius: 24px; position: relative; overflow: hidden; margin: 32px 0; display: flex; flex-direction: column; align-items: center; border: 1px solid var(--glass-border); box-shadow: inset 0 0 80px rgba(0,0,0,0.2), 0 20px 60px rgba(0,0,0,0.4); font-family: var(--sans); }
+#game-title { color: var(--text); font-weight: 500; font-size: 12px; letter-spacing: 0.2em; margin-top: 32px; z-index: 2; text-align: center; }
+#game-feedback { font-size: 13px; letter-spacing: 0.3em; color: var(--muted); height: 20px; margin-top: 12px; z-index: 2; font-weight: 600; transition: color 0.3s ease; }
+#game-area { position: absolute; inset: 0; cursor: crosshair; z-index: 1; }
+#gameCanvas { width: 100%; height: 100%; display: block; }
+#game-pearl { position: absolute; width: 12px; height: 12px; background: var(--text); border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 24px 12px var(--seg-glow), inset 0 0 4px #fff; pointer-events: none; display: none; z-index: 4; }
+#game-pearl.visible { display: block; animation: popReveal 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+@keyframes popReveal { from { transform: translate(-50%, -50%) scale(0); opacity: 0; } to { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
+#game-win-screen { position: absolute; inset: 0; background: var(--bg2); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10; opacity: 0; pointer-events: none; transition: opacity 0.6s ease; }
+#game-win-screen.visible { opacity: 1; pointer-events: auto; }
+#game-quote { font-size: clamp(16px, 3vw, 24px); letter-spacing: 0.02em; font-weight: 400; color: var(--text); margin-bottom: 32px; text-align: center; max-width: 80%; line-height: 1.5; }
+#game-quote span { color: var(--accent-light); }
 
 /* ABOUT & CONTACT */
 .about{padding:40px 0 90px;display:grid;grid-template-columns:1fr 1.3fr;gap:6vw; position: relative; z-index: 2;}
@@ -836,12 +278,32 @@ h1 span{color:var(--accent-green)}
 .about-copy span{color:var(--accent-light)}
 .contact{border-top:1px solid var(--line);padding:48px 0 40px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;transition:var(--trans-base); position: relative; z-index: 2;}
 .contact h2{font-size:clamp(40px,8vw,100px);line-height:.9;letter-spacing:-.075em;font-weight:450;margin:12px 0 0}
-.contact-right{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
-.contact-links{display:flex;gap:20px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.contact-right{display:flex;flex-direction:column;align-items:flex-end;gap:16px;margin-left:auto}
+.contact-links{display:flex;justify-content:flex-end;align-items:center;gap:20px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
 .phone{font-size:13px;color:var(--muted);min-height:44px;display:inline-flex;align-items:center;}
 footer{border-top:1px solid var(--line);padding:20px 0 28px;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;font-size:11px;color:var(--muted);letter-spacing:.04em;transition:var(--trans-base); position: relative; z-index: 2;}
 
-/* ADAPTACIONES ESPECÍFICAS PARA MÓVIL */
+
+/* MICROINTERACCIONES SUTILES · movimiento de agua y profundidad */
+.liquid-glass { transition: transform .55s cubic-bezier(.2,.75,.25,1), background .45s ease, border-color .45s ease, box-shadow .55s ease; }
+.project-card.liquid-glass:hover, .tech-card.liquid-glass:hover { transform: translateY(-3px); box-shadow: 0 18px 48px rgba(0,0,0,.16); }
+.hero-skill-card:hover .star-icon.filled { animation: star-glimmer .85s ease both; }
+.hero-skill-card:hover .star-icon.filled:nth-child(2n) { animation-delay: .08s; }
+@keyframes star-glimmer { 0%,100% { filter: drop-shadow(0 0 0 transparent); transform: translateY(0) scale(1); } 45% { filter: drop-shadow(0 0 5px var(--seg-glow)); transform: translateY(-2px) scale(1.12); } }
+.carousel-slide img, .mockup-img { transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .8s ease; }
+.carousel-slide:hover img, .carousel-slide:hover .mockup-img { transform: scale(1.025); }
+.text-link svg { transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+.contact-right { margin-left:auto; width:100%; display:flex; justify-content:flex-end; }
+.contact-links { margin-left:auto; justify-content:flex-end; align-items:center; flex-wrap:wrap; }
+.closing-note { display:block; width:100%; margin:24px 0 0; padding:clamp(24px, 4vw, 42px) 0; border-top:1px solid var(--line); color:var(--muted); }
+.closing-note-copy { display:block; width:100%; max-width:none; font-size:clamp(20px, 3.2vw, 34px); line-height:1.18; letter-spacing:-.04em; color:var(--text); text-wrap:balance; }
+.closing-note-copy em { color:var(--accent-light); font-style:normal; }
+.closing-signal { display:flex; justify-content:flex-end; align-items:center; gap:9px; margin-top:18px; font-size:10px; letter-spacing:.14em; text-transform:uppercase; }
+.closing-signal-dot { width:7px; height:7px; border-radius:50%; background:var(--accent-light); box-shadow:0 0 0 0 var(--seg-glow); animation: signal-ripple 3s ease-out infinite; }
+@keyframes signal-ripple { 0% { box-shadow:0 0 0 0 var(--seg-glow); opacity:1; } 75%,100% { box-shadow:0 0 0 9px transparent; opacity:.72; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.01ms !important; } }
+
+/* MÓVIL */
 @media(max-width: 768px){
   .wrap{width:calc(100% - 32px)}
   header { height: 64px; }
@@ -856,22 +318,70 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;display:flex;justify
   .about{grid-template-columns:1fr;gap:16px;padding-bottom:60px}
   .about-copy{font-size:clamp(22px, 6vw, 28px)}
   .contact{align-items:flex-start;flex-direction:column;padding-top:36px;gap:28px}
-  
+  .contact-right { justify-content:flex-start; width:100%; }
+  .contact-links { margin-left:0; justify-content:flex-start; gap:16px; }
+  .closing-note { width:100%; padding:24px 0; }
+  .closing-note-copy { width:100%; max-width:none; font-size:clamp(20px, 6vw, 28px); line-height:1.22; }
+  .closing-signal { justify-content:flex-end; margin-top:16px; }
   .hero-academic { padding: 20px; }
   .academic-grid { gap: 20px; grid-template-columns: 1fr; }
-  
   .project-layout { grid-template-columns: 1fr; gap: 40px; margin-bottom: 40px;}
-  .carousel-slide-wrapper { flex: 0 0 85%; }
-  .carousel-btn { display: none; } /* En móvil se usa el swipe natural */
+  .carousel-slide-wrapper, .carousel-slide-wrapper.large-poster { flex: 0 0 85%; }
+  .carousel-btn { display: none; }
 }
+
+/* Ajustes de interacción, ritmo y adaptación */
+.fusion-logo-icon img { width: 25px; height: 25px; object-fit: contain; display: block; filter: grayscale(1) brightness(0) invert(.78); opacity: .92; }
+[data-theme="light"] .fusion-logo-icon img { filter: grayscale(1) brightness(0) invert(.20); opacity: .82; }
+.hero-skill-card .stars .star-icon { transform-origin: center; }
+.hero-skill-card:hover .stars .star-icon.filled, .hero-skill-card:hover .stars .star-icon.half { animation: star-twinkle .9s ease-in-out infinite; }
+.hero-skill-card:hover .stars .star-icon.filled:nth-child(2n), .hero-skill-card:hover .stars .star-icon.half:nth-child(2n) { animation-delay: .14s; }
+.hero-skill-card:hover .stars .star-icon.filled:nth-child(3n), .hero-skill-card:hover .stars .star-icon.half:nth-child(3n) { animation-delay: .28s; }
+@keyframes star-twinkle { 0%,100% { opacity: .35; transform: scale(.88) rotate(-7deg); filter: drop-shadow(0 0 0 transparent); } 45% { opacity: 1; transform: scale(1.22) rotate(7deg); filter: drop-shadow(0 0 5px var(--accent-light)); } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
+.carousel-track { overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; scroll-padding-inline: 4px; cursor: grab; }
+.carousel-track.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.carousel-slide-wrapper { min-width: 0; }
+.contact-links { display: flex; flex-direction: row; align-items: center; gap: clamp(10px, 2vw, 24px); flex-wrap: nowrap; }
+.contact-links .text-link { white-space: nowrap; }
+.contact-right { width: 100%; align-items: flex-end; margin-left: 0; }
+.about { scroll-margin-top: 90px; }
+@media (max-width: 768px) {
+  .wrap { width: calc(100% - 36px); }
+  .hero-dashboard { gap: 16px; margin-top: 32px; }
+  .hero-skills { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .hero-skill-card { min-width: 0; padding: 12px 10px; gap: 9px; }
+  .hero-skill-info h3 { font-size: 12px; }
+  .stars { gap: 2px; }
+  .star-icon { width: 10px; height: 10px; }
+  .projects { padding-bottom: 36px; }
+  .project-card { padding: 22px 18px; border-radius: 20px; gap: 14px; }
+  .project-header { gap: 10px; }
+  .project-tags { gap: 6px; }
+  .tag { font-size: 9px; padding: 5px 9px; }
+  .project-layout { gap: 24px; margin: 28px 0; }
+  .gallery-section { margin-top: 48px; }
+  .image-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .carousel-container { gap: 8px; }
+  .carousel-track { gap: 14px; padding: 8px 2px 14px; }
+  .carousel-slide-wrapper, .carousel-slide-wrapper.large-poster { flex: 0 0 min(82%, 340px); }
+  .carousel-btn { display: none; }
+  .contact { align-items: flex-start; flex-direction: column; padding-top: 32px; gap: 18px; }
+  .contact-right { gap: 8px; }
+  .contact-links { width: 100%; justify-content: flex-end; gap: 8px; }
+  .contact-links .text-link { font-size: 11px; gap: 4px; }
+  .contact-links .phone { font-size: 10px; letter-spacing: -.02em; }
+  .about { padding: 26px 0 38px; gap: 12px; }
+  .about-copy { font-size: clamp(21px, 6vw, 28px); line-height: 1.25; }
+  .project-text-content h3 { margin-top: 32px; }
+}
+@media (max-width: 360px) { .hero-skills { grid-template-columns: 1fr; } .contact-links { flex-wrap: wrap; justify-content: flex-end; } .contact-links .phone { font-size: 11px; } }
+
 </style>
 </head>
 <body>
 
-<!-- CANVAS FONDO PARA LA MEDUSA ANIMADA BIOLUMINISCENTE -->
 <canvas id="jellyfishCanvas"></canvas>
-
-<!-- OVERLAYS PARA EFECTOS DE TRANSICIÓN -->
 <div class="flash-wave-overlay" id="flashWave"></div>
 <div id="glassTransitionOverlay"></div>
 
@@ -879,15 +389,11 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;display:flex;justify
   <div class="wrap">
     <div class="header-container">
       <a class="wordmark" href="#" onclick="transitionToHome(event)" aria-label="Martín Silva, inicio">SILVA<span>.</span></a>
-      
-      <!-- NAV DESKTOP -->
       <nav class="desktop-nav" aria-label="Navegación principal">
         <a href="#proyectos" onclick="transitionToHome(event, 'proyectos')">Proyectos</a>
         <a href="#sobre-mi" onclick="transitionToHome(event, 'sobre-mi')">Sobre mí</a>
         <a href="#contacto" onclick="transitionToHome(event, 'contacto')">Contacto</a>
       </nav>
-
-      <!-- ACCIONES DE HEADER -->
       <div class="nav-actions">
         <button class="theme-btn" id="themeToggle" aria-label="Cambiar tema de color">
           <span id="themeIcon">
@@ -895,7 +401,6 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;display:flex;justify
           </span> 
           <span id="themeLabel">Modo Día</span>
         </button>
-
         <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú de navegación">
           <svg viewBox="0 0 24 24" id="menuIcon"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
@@ -904,7 +409,6 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;display:flex;justify
   </div>
 </header>
 
-<!-- MENÚ DESPLEGABLE MÓVIL -->
 <nav class="mobile-menu" id="mobileMenu" aria-label="Navegación móvil">
   <a href="#proyectos" onclick="transitionToHomeMobile(event, 'proyectos')">Proyectos</a>
   <a href="#sobre-mi" onclick="transitionToHomeMobile(event, 'sobre-mi')">Sobre mí</a>
@@ -912,84 +416,44 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;display:flex;justify
 </nav>
 
 <div class="wrap">
-  <!-- VISTA PRINCIPAL PORTFOLIO -->
   <div id="home-view" class="page-view" style="position: relative;">
-    
-    <!-- CANVAS DE ALGAS SIN ROCAS AL FONDO -->
-    <canvas id="algaeCanvas"></canvas>
-
     <main>
       <section class="hero" id="inicio">
-        
         <div class="eyebrow">Diseño industrial · Buenos Aires</div>
-        
         <div class="hero-copy">
           <h1>Martín<br><span>Silva.</span></h1>
-          <p class="intro">Objetos, materia y forma.<br>Explorando ideas en construcción.</p>
+          <p class="intro">Diseñador industrial en formación.</p>
         </div>
           
-        <!-- DASHBOARD -->
         <div class="hero-dashboard">
-          
-          <!-- Panel Académico Horizontal -->
           <div class="hero-academic liquid-glass">
-            <div class="eyebrow" style="margin-bottom: 24px; color: var(--text);">Diseño Industrial · Fadu Uba</div>
-            
+            <div class="eyebrow" style="margin-bottom: 24px; color: var(--accent-light);">Diseño Industrial · FADU, UBA</div>
             <div class="academic-grid">
-              <!-- Taller de Diseño -->
               <div class="academic-item">
-                <div class="academic-header">
-                  <strong>Taller de Diseño</strong>
-                  <span>Nivel 1/4</span>
-                </div>
+                <div class="academic-header"><strong>Taller de Diseño</strong><span>Nivel 1/4</span></div>
                 <div class="progress-track">
-                  <div class="progress-segment filled"></div>
-                  <div class="progress-segment blinking-level"></div>
-                  <div class="progress-segment"></div>
-                  <div class="progress-segment"></div>
+                  <div class="progress-segment filled"></div><div class="progress-segment blinking-level"></div><div class="progress-segment"></div><div class="progress-segment"></div>
                 </div>
               </div>
-
-              <!-- Tecnología -->
               <div class="academic-item">
-                <div class="academic-header">
-                  <strong>Tecnología</strong>
-                  <span>Nivel 1/4</span>
-                </div>
+                <div class="academic-header"><strong>Tecnología</strong><span>Nivel 1/4</span></div>
                 <div class="progress-track">
-                  <div class="progress-segment filled"></div>
-                  <div class="progress-segment blinking-level"></div>
-                  <div class="progress-segment"></div>
-                  <div class="progress-segment"></div>
+                  <div class="progress-segment filled"></div><div class="progress-segment blinking-level"></div><div class="progress-segment"></div><div class="progress-segment"></div>
                 </div>
               </div>
-
-              <!-- Morfología -->
               <div class="academic-item">
-                <div class="academic-header">
-                  <strong>Morfología</strong>
-                  <span>Nivel 1/3</span>
-                </div>
+                <div class="academic-header"><strong>Morfología</strong><span>Nivel 1/3</span></div>
                 <div class="progress-track">
-                  <div class="progress-segment filled"></div>
-                  <div class="progress-segment blinking-level"></div>
-                  <div class="progress-segment"></div>
+                  <div class="progress-segment filled"></div><div class="progress-segment blinking-level"></div><div class="progress-segment"></div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Panel de Skills -->
           <div class="hero-skills">
             
-            <!-- Illustrator -->
             <div class="hero-skill-card liquid-glass">
-              <div class="hero-skill-icon">
-                <svg viewBox="0 0 24 24">
-                  <rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
-                  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="11" font-family="var(--sans)" font-weight="600" fill="currentColor">Ai</text>
-                </svg>
-              </div>
+              <div class="hero-skill-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/><text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="11" font-family="var(--sans)" font-weight="600" fill="currentColor">Ai</text></svg></div>
               <div class="hero-skill-info">
                 <h3>Illustrator</h3>
                 <div class="stars">
@@ -1002,60 +466,8 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;display:flex;justify
               </div>
             </div>
 
-            <!-- Premiere Pro -->
             <div class="hero-skill-card liquid-glass">
-              <div class="hero-skill-icon">
-                <svg viewBox="0 0 24 24">
-                  <rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
-                  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="11" font-family="var(--sans)" font-weight="600" fill="currentColor">Pr</text>
-                </svg>
-              </div>
-              <div class="hero-skill-info">
-                <h3>Premiere Pro</h3>
-                <div class="stars">
-                  <svg viewBox="0 0 24 24" class="star-icon filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                  <svg viewBox="0 0 24 24" class="star-icon filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                  <svg viewBox="0 0 24 24" class="star-icon filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                  <svg viewBox="0 0 24 24" class="star-icon filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                  <svg viewBox="0 0 24 24" class="star-icon half">
-                    <path fill="currentColor" opacity="0.25" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    <path class="filled-half" fill="currentColor" d="M12 2v15.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                  </svg>
-                </div>
-              </div>
-            </div>
-
-            <!-- After Effects -->
-            <div class="hero-skill-card liquid-glass">
-              <div class="hero-skill-icon">
-                <svg viewBox="0 0 24 24">
-                  <rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
-                  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="11" font-family="var(--sans)" font-weight="600" fill="currentColor">Ae</text>
-                </svg>
-              </div>
-              <div class="hero-skill-info">
-                <h3>After Effects</h3>
-                <div class="stars">
-                  <svg viewBox="0 0 24 24" class="star-icon filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                  <svg viewBox="0 0 24 24" class="star-icon filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                  <svg viewBox="0 0 24 24" class="star-icon filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                  <svg viewBox="0 0 24 24" class="star-icon half">
-                    <path fill="currentColor" opacity="0.25" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    <path class="filled-half" fill="currentColor" d="M12 2v15.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                  </svg>
-                  <svg viewBox="0 0 24 24" class="star-icon"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                </div>
-              </div>
-            </div>
-
-            <!-- Photoshop -->
-            <div class="hero-skill-card liquid-glass">
-              <div class="hero-skill-icon">
-                <svg viewBox="0 0 24 24">
-                  <rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
-                  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="11" font-family="var(--sans)" font-weight="600" fill="currentColor">Ps</text>
-                </svg>
-              </div>
+              <div class="hero-skill-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/><text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="11" font-family="var(--sans)" font-weight="600" fill="currentColor">Ps</text></svg></div>
               <div class="hero-skill-info">
                 <h3>Photoshop</h3>
                 <div class="stars">
@@ -1068,14 +480,51 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;display:flex;justify
               </div>
             </div>
 
-            <!-- Fusion 360 -->
             <div class="hero-skill-card liquid-glass">
-              <div class="hero-skill-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 3L3 8v8l9 5 9-5V8l-9-5z"/>
-                  <path d="M3 8l9 5 9-5"/>
-                  <path d="M12 13v10"/>
-                </svg>
+              <div class="hero-skill-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/><text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="11" font-family="var(--sans)" font-weight="600" fill="currentColor">Lr</text></svg></div>
+              <div class="hero-skill-info">
+                <h3>Lightroom</h3>
+                <div class="stars">
+                  <svg viewBox="0 0 24 24" class="star-icon filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" class="star-icon filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" class="star-icon filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" class="star-icon"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" class="star-icon"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-skill-card liquid-glass">
+              <div class="hero-skill-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/><text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="11" font-family="var(--sans)" font-weight="600" fill="currentColor">Pr</text></svg></div>
+              <div class="hero-skill-info">
+                <h3>Premiere Pro</h3>
+                <div class="stars">
+                  <svg viewBox="0 0 24 24" class="star-icon filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" class="star-icon filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" class="star-icon filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" class="star-icon filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" class="star-icon half"><path fill="currentColor" opacity="0.25" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/><path class="filled-half" fill="currentColor" d="M12 2v15.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-skill-card liquid-glass">
+              <div class="hero-skill-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/><text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="11" font-family="var(--sans)" font-weight="600" fill="currentColor">Ae</text></svg></div>
+              <div class="hero-skill-info">
+                <h3>After Effects</h3>
+                <div class="stars">
+                  <svg viewBox="0 0 24 24" class="star-icon filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" class="star-icon filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" class="star-icon filled"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" class="star-icon half"><path fill="currentColor" opacity="0.25" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/><path class="filled-half" fill="currentColor" d="M12 2v15.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" class="star-icon"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-skill-card liquid-glass">
+              <div class="hero-skill-icon fusion-logo-icon">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/Fusion360_Logo.svg" alt="Logo original de Fusion 360" loading="lazy" />
               </div>
               <div class="hero-skill-info">
                 <h3>Fusion 360</h3>
@@ -1089,22 +538,65 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;display:flex;justify
               </div>
             </div>
 
+            
+
           </div>
         </div>
 
         <div class="hero-bottom">
           <span class="scroll-note">Portfolio · 2026</span>
           <a class="text-link" href="#proyectos">
-            Explorar 
-            <svg viewBox="0 0 24 24"><line x1="7" y1="7" x2="17" y2="17"/><polyline points="17 7 17 17 7 17"/></svg>
+            Explorar <svg viewBox="0 0 24 24"><line x1="7" y1="7" x2="17" y2="17"/><polyline points="17 7 17 17 7 17"/></svg>
           </a>
         </div>
+      </section>
+
+      <section class="about" id="sobre-mi">
+        <div class="about-label">Sobre mí</div>
+        <p class="about-copy">
+          Soy estudiante de <span>Diseño Industrial en FADU, UBA</span>, <span>Buenos Aires</span>. Hoy estoy enfocado en la carrera: investigar los objetos, entender cómo funcionan y explorar el cruce entre tecnología, forma e identidad.
+        </p>
       </section>
 
       <section class="projects" id="proyectos">
         <div class="section-head">
           <h2>Proyectos</h2>
           <span>Selección de trabajos</span>
+        </div>
+
+        <div class="project-card liquid-glass">
+          <div class="project-header">
+            <div>
+              <div class="eyebrow">Indumentaria & Dirección de Arte</div>
+              <div class="project-title">
+                <h3><span class="late-call-card-word">Late Call</span></h3>
+              </div>
+              <div class="project-tags">
+                <span class="tag">Dirección de Arte</span>
+                <span class="tag">Diseño</span>
+                <span class="tag">Identidad Visual</span>
+                <span class="tag">Fotografía</span>
+              </div>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 12px; margin-top: 4px;">
+              <span class="scroll-note">01 — 2025</span>
+              <div style="width: 60px; height: 4px; background: var(--glass-border); border-radius: 2px; overflow: hidden; position: relative;">
+                <div style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: var(--accent-light);"></div>
+              </div>
+              <span class="scroll-note" style="color: var(--text);">Ciclo Cumplido</span>
+            </div>
+          </div>
+
+          <p class="project-desc">
+            Late Call fue mucho más que hacer ropa: fue el lugar donde pude convertir ideas, obsesiones visuales y ganas de crear en un universo propio. Cada drop fue una excusa para contar algo, probar una estética y construir una identidad que se sintiera mía. Lo trabajé con intuición, diseño y muchísimo cariño; hoy es un ciclo cumplido, pero sigue siendo una de las etapas que más orgullo me da mostrar.
+          </p>
+
+          <div class="project-footer">
+            <button class="text-link" onclick="transitionToProject('late-call')">
+              Ver proyecto <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </button>
+          </div>
         </div>
 
         <div class="project-card liquid-glass">
@@ -1121,29 +613,50 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;display:flex;justify
                 <span class="tag">Bajo Costo</span>
               </div>
             </div>
-            <span class="scroll-note">01 — 2026</span>
+            <span class="scroll-note">02 — 2026</span>
           </div>
 
           <p class="project-desc">
-            Propuesta de diseño focalizada en la transformación de residuos en valor. Un sistema de revestimiento modular fabricado a partir de cartón reciclado y aglutinantes biodegradables, concebido para optimizar costos de producción y acompañar la transición hacia la industria reciclada.
+            Propuesta de diseño focalizada en la transformación de residuos en valor. Un sistema de revestimiento modular fabricado a partir de cartón reciclado y aglutinantes biodegradables, concebido para optimizar costos de producción.
           </p>
 
           <div class="project-footer">
             <button class="text-link" onclick="transitionToProject('wall-cladding')">
-              Ver proyecto 
-              <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              Ver proyecto <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
             </button>
           </div>
         </div>
+
+        <div class="project-card liquid-glass">
+          <div class="project-header">
+            <div>
+              <div class="eyebrow">Diseño Gráfico & Composición</div>
+              <div class="project-title">
+                <h3>Posters y Exploración Gráfica</h3>
+              </div>
+              <div class="project-tags">
+                <span class="tag">Illustrator</span>
+                <span class="tag">Photoshop</span>
+                <span class="tag">Visual Arts</span>
+              </div>
+            </div>
+            <span class="scroll-note">03 — 2024 / 2026</span>
+          </div>
+
+          <p class="project-desc">
+            Colección de afiches, experimentación visual y composiciones gráficas desarrolladas a lo largo de la carrera. Un espacio para romper estructuras, jugar con el color, la tipografía y las retículas.
+          </p>
+
+          <div class="project-footer">
+            <button class="text-link" onclick="transitionToProject('posters')">
+              Ver proyecto <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </button>
+          </div>
+        </div>
+
       </section>
 
-      <section class="about" id="sobre-mi">
-        <div class="about-label">Sobre mí</div>
-        <p class="about-copy">
-          Soy estudiante de Diseño Industrial en FADU, Buenos Aires. 
-          <span>Me interesa explorar cómo los objetos toman forma, se construyen y conviven con las personas.</span>
-        </p>
-      </section>
+      
 
       <section class="contact" id="contacto">
         <div>
@@ -1152,151 +665,281 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;display:flex;justify
         </div>
         <div class="contact-right">
           <div class="contact-links">
-            <a class="text-link" href="https://www.instagram.com/ssilvadesign_/" target="_blank" rel="noopener noreferrer">
-              Instagram 
-              <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-            </a>
-            <a class="text-link" href="mailto:tinchossilva@gmail.com">
-              Email 
-              <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-            </a>
+            <a class="text-link" href="https://www.instagram.com/ssilvadesign_/" target="_blank" rel="noopener noreferrer">Instagram <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+            <a class="text-link" href="mailto:tinchossilva@gmail.com">Gmail <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+            <a class="phone text-link" href="tel:+543489598230">+54 3489 598230</a>
           </div>
-          <a class="phone" href="tel:+543489598230">+54 3489 598230</a>
         </div>
+      </section>
+      <section class="closing-note" aria-label="Cierre">
+        <div class="closing-note-copy">Sigo explorando lo que hay debajo de la superficie. <em>Esto recién empieza.</em></div>
+        <div class="closing-signal"><span class="closing-signal-dot"></span> Señal activa</div>
       </section>
     </main>
   </div>
 
-  <!-- VISTA DETALLE DEL PROYECTO: REVESTIMIENTO -->
-  <div id="project-wall-cladding" class="page-view hidden">
+  <div id="project-late-call" class="page-view hidden">
     <main class="project-detail-hero">
       
       <button class="text-link back-btn" onclick="transitionToHome(event, 'proyectos')">
-        <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-        Volver a proyectos
+        <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Volver a proyectos
       </button>
 
-      <div class="eyebrow">Proyecto 01 · Sustentabilidad & Materia</div>
+      <div class="eyebrow">Proyecto 01 · Universo Visual (Ciclo Cumplido)</div>
+      <h1 style="font-size: clamp(36px, 7vw, 90px); margin: 16px 0 0; line-height: 1; font-weight:450; letter-spacing:-.045em;">
+        <span class="late-call-brand-word">Late Call.</span><br><span>Laboratorio creativo.</span>
+      </h1>
+
+      <div class="project-layout">
+        <div class="project-text-content">
+          <p>Late Call fue mi marca de indumentaria y, sobre todo, un espacio para construir un universo propio. Hoy es un <strong>ciclo cumplido</strong>, pero sigue siendo una de las etapas creativas que más orgullo me da mostrar.</p>
+          <h3>Un universo propio</h3>
+          <p>Desde las prendas hasta las campañas, trabajé la identidad de forma integral: estampas, bordados, dirección de arte, fotografía y cada detalle de los lanzamientos. Me interesaba que todo hablara el mismo lenguaje y tuviera una personalidad reconocible.</p>
+          <p>Late Call me enseñó a convertir ideas en algo real, a cuidar los detalles y a sostener una visión. Le puse muchísimo de mí; por eso, aunque el ciclo esté cerrado, lo recuerdo con cariño y lo comparto con orgullo.</p>
+        </div>
+        <div class="project-specs">
+          <div class="tech-card liquid-glass">
+            <h4>Estado del Proyecto</h4>
+            <p>Ciclo cerrado (2025). Etapa clave en mi formación creativa.</p>
+          </div>
+          <div class="tech-card liquid-glass">
+            <h4>El Enfoque</h4>
+            <p>Libertad creativa total, diseño gráfico, estética y conceptualización.</p>
+          </div>
+          <div class="tech-card liquid-glass">
+            <h4>Producción</h4>
+            <p>3 Drops completados a lo largo de 2025 con diseño y narrativa integral.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery-section">
+        <div class="section-head">
+          <h2>Momentos y Dirección de Arte</h2>
+          <span>Explorar universo visual</span>
+        </div>
+        <div class="image-grid">
+          <div class="carousel-slide-wrapper">
+            <div class="carousel-slide liquid-glass portrait">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            </div>
+            <span class="slide-caption">Desarrollo del concepto visual</span>
+          </div>
+          <div class="carousel-slide-wrapper">
+            <div class="carousel-slide liquid-glass portrait">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            </div>
+            <span class="slide-caption">Campaña y Fotografía</span>
+          </div>
+          <div class="carousel-slide-wrapper">
+            <div class="carousel-slide liquid-glass portrait">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            </div>
+            <span class="slide-caption">Identidad y Gráficas del Drop</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN ESPECIAL ROSA CON IMÁGENES ACTUALIZADAS -->
+      <div class="pink-transition-zone">
+        <div class="eyebrow pink-text">Special Drop · 2025</div>
+        <h3 style="font-size: clamp(24px, 4vw, 40px); margin: 16px 0 24px; color: var(--text);">
+          Camiseta de fútbol <span class="pink-text">Rosa.</span>
+        </h3>
+        <div class="carousel-container" style="margin-top: 40px;">
+          <div class="carousel-track" style="padding-bottom: 20px;">
+            <!-- IMAGEN 1: FRENTE VECTOR -->
+            <div class="carousel-slide-wrapper" style="flex: 0 0 calc(33.333% - 16px);">
+              <div class="carousel-slide liquid-glass pink-glass portrait">
+                <img src="IMG_3873.jpg" alt="Frente Camiseta" class="mockup-img">
+              </div>
+            </div>
+            <!-- IMAGEN 2: CAMPAÑA FOTO REAL -->
+            <div class="carousel-slide-wrapper" style="flex: 0 0 calc(33.333% - 16px);">
+              <div class="carousel-slide liquid-glass pink-glass portrait">
+                <img src="IMG_3875.jpg" alt="Campaña Fotográfica" class="mockup-img">
+              </div>
+            </div>
+            <!-- IMAGEN 3: DORSO VECTOR -->
+            <div class="carousel-slide-wrapper" style="flex: 0 0 calc(33.333% - 16px);">
+              <div class="carousel-slide liquid-glass pink-glass portrait">
+                <img src="IMG_3874.jpg" alt="Dorso Camiseta" class="mockup-img">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 80px; text-align: right; border-top: 1px solid var(--line); padding-top: 24px;">
+        <button class="text-link" onclick="transitionToHome(event)">
+          Volver al inicio <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <div id="project-wall-cladding" class="page-view hidden">
+    <main class="project-detail-hero" style="padding-bottom: 0;">
+      
+      <button class="text-link back-btn" onclick="transitionToHome(event, 'proyectos')">
+        <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Volver a proyectos
+      </button>
+
+      <div class="eyebrow">Proyecto 02 · Sustentabilidad & Materia</div>
       <h1 style="font-size: clamp(36px, 7vw, 80px); margin: 16px 0 0; line-height: 1;">
         Revestimiento a base de<br><span>materiales reciclables.</span>
       </h1>
 
-      <!-- Estructura Editorial de dos columnas -->
       <div class="project-layout">
-        
-        <!-- Columna Izquierda: Textos y Propuesta -->
         <div class="project-text-content">
           <p>
-            Una propuesta integral que replantea la fabricación de placas de revestimiento. Utilizando pulpa de cartón reciclado combinada con aglutinantes naturales y biodegradables, este proyecto busca reducir al máximo los costos energéticos y productivos, promoviendo soluciones reales para la economía circular en la industria del hábitat.
+            Una propuesta integral que replantea la fabricación de placas de revestimiento. Utilizando pulpa de cartón reciclado combinada con aglutinantes naturales y biodegradables, este proyecto busca reducir al máximo los costos energéticos y productivos, promoviendo soluciones reales para la economía circular.
           </p>
-          
           <h3>Estrategia Productiva y Valor Sustentable</h3>
           <p>
-            El objetivo central de este desarrollo es acompañar el crecimiento de la industria del reciclado mediante un sistema productivo eficiente. Al emplear pulpa de cartón recuperada como matriz volumétrica, se eliminan los costos de extracción y procesado de insumos vírgenes.
-          </p>
-          <p>
-            Mediante el moldeado por compresión simple y el secado optimizado, el revestimiento logra rigidez mecánica y volumen estético sin demandar procesos sintéticos ni polímeros derivados del petróleo, resultando en un producto de bajo costo accesible para la arquitectura de interiores.
+            Al emplear pulpa de cartón recuperada como matriz volumétrica, se eliminan los costos de extracción y procesado de insumos vírgenes. Mediante el moldeado por compresión simple y el secado optimizado, el revestimiento logra rigidez mecánica y volumen estético sin demandar procesos sintéticos.
           </p>
         </div>
-
-        <!-- Columna Derecha: Especificaciones / Tech Cards -->
         <div class="project-specs">
           <div class="tech-card liquid-glass">
             <h4>Materialidad Principal</h4>
             <p>Pulpa de cartón posconsumo y aglutinantes vegetales.</p>
           </div>
           <div class="tech-card liquid-glass">
-            <h4>Enfoque Industrial</h4>
-            <p>Reducción de costos de materia prima y procesado de bajo consumo.</p>
-          </div>
-          <div class="tech-card liquid-glass">
-            <h4>Propiedades</h4>
-            <p>Acondicionamiento acústico y ensamble modular rápido.</p>
-          </div>
-          <div class="tech-card liquid-glass">
             <h4>Ciclo de Vida</h4>
             <p>100% Reciclable y compostable sin dejar huella contaminante.</p>
           </div>
         </div>
-
       </div>
 
-      <!-- Sección de Galería / Carrusel -->
-      <div class="gallery-section">
+      <div class="gray-transition-zone">
         <div class="section-head">
-          <h2>Galería de Renders y Vistas</h2>
-          <span>Explorar imágenes</span>
+          <h2 style="color: var(--text);">Galería de Renders y Vistas</h2>
+          <span>Imágenes a escala de grises</span>
         </div>
-
+        
         <div class="carousel-container">
-          <button class="carousel-btn" id="prevRender" aria-label="Anterior">
+          <button class="carousel-btn" id="prevRenderCarton" aria-label="Anterior">
             <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
           
-          <div class="carousel-track" id="renderTrack">
-            <!-- Slide 01 -->
+          <div class="carousel-track" id="renderTrackCarton">
             <div class="carousel-slide-wrapper">
-              <div class="carousel-slide liquid-glass">
+              <div class="carousel-slide liquid-glass gray-glass">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
               </div>
               <span class="slide-caption"><strong>01</strong> / Vista General del Módulo</span>
             </div>
-            <!-- Slide 02 -->
             <div class="carousel-slide-wrapper">
-              <div class="carousel-slide liquid-glass">
+              <div class="carousel-slide liquid-glass gray-glass">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
               </div>
               <span class="slide-caption"><strong>02</strong> / Detalle de Ensamble y Textura</span>
             </div>
-            <!-- Slide 03 -->
             <div class="carousel-slide-wrapper">
-              <div class="carousel-slide liquid-glass">
+              <div class="carousel-slide liquid-glass gray-glass">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
               </div>
               <span class="slide-caption"><strong>03</strong> / Aplicación en Entorno Interior</span>
             </div>
-            <!-- Slide 04 -->
             <div class="carousel-slide-wrapper">
-              <div class="carousel-slide liquid-glass">
+              <div class="carousel-slide liquid-glass gray-glass">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
               </div>
               <span class="slide-caption"><strong>04</strong> / Proceso de Fabricación y Moldes</span>
             </div>
           </div>
-
-          <button class="carousel-btn" id="nextRender" aria-label="Siguiente">
+          <button class="carousel-btn" id="nextRenderCarton" aria-label="Siguiente">
             <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
           </button>
         </div>
-      </div>
 
-      <div style="margin-top: 80px; text-align: right; border-top: 1px solid var(--line); padding-top: 24px;">
-        <button class="text-link" onclick="transitionToHome(event)">
-          Volver al inicio 
-          <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-        </button>
+        <div style="margin-top: 80px; text-align: right; border-top: 1px solid var(--line); padding-top: 24px;">
+          <button class="text-link" onclick="transitionToHome(event)">
+            Volver al inicio <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </button>
+        </div>
       </div>
-
     </main>
   </div>
 
-  <!-- VISTA SECRETA: MINIJUEGO "FIND THE JELLY" -->
+  <div id="project-posters" class="page-view hidden">
+    <main class="project-detail-hero" style="padding-bottom: 0;">
+      
+      <button class="text-link back-btn" onclick="transitionToHome(event, 'proyectos')">
+        <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Volver a proyectos
+      </button>
+
+      <div class="eyebrow" style="color: #e2a0ff; text-shadow: 0 0 10px rgba(138,43,226,0.5);">Proyecto 03 · Exploración Visual</div>
+      <h1 style="font-size: clamp(36px, 7vw, 80px); margin: 16px 0 0; line-height: 1;">
+        Posters y<br><span class="glitch-text">Exploración Gráfica.</span>
+      </h1>
+
+      <div class="vibrant-zone">
+        <p class="project-text-content" style="max-width: 680px; margin-bottom: 40px; color: var(--text); text-shadow: 0 0 15px rgba(0,0,0,0.8);">
+          Fuera de las estructuras y restricciones técnicas del diseño industrial, este es un espacio para experimentar libremente con el color, la tipografía, el contraste y la composición gráfica pura. Una selección de los afiches y pósters diseñados a lo largo de la carrera.
+        </p>
+
+        <div class="carousel-container" style="margin-top: 24px;">
+          <button class="carousel-btn vibrant-glass" id="prevRenderPosters" aria-label="Anterior">
+            <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          
+          <div class="carousel-track" id="renderTrackPosters">
+            <div class="carousel-slide-wrapper large-poster">
+              <div class="carousel-slide liquid-glass vibrant-glass portrait-large">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              </div>
+            </div>
+            <div class="carousel-slide-wrapper large-poster">
+              <div class="carousel-slide liquid-glass vibrant-glass portrait-large">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              </div>
+            </div>
+            <div class="carousel-slide-wrapper large-poster">
+              <div class="carousel-slide liquid-glass vibrant-glass portrait-large">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              </div>
+            </div>
+            <div class="carousel-slide-wrapper large-poster">
+              <div class="carousel-slide liquid-glass vibrant-glass portrait-large">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              </div>
+            </div>
+            <div class="carousel-slide-wrapper large-poster">
+              <div class="carousel-slide liquid-glass vibrant-glass portrait-large">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <button class="carousel-btn vibrant-glass" id="nextRenderPosters" aria-label="Siguiente">
+            <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+
+        <div style="margin-top: 80px; text-align: right; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px;">
+          <button class="text-link" onclick="transitionToHome(event)" style="border-color: rgba(255,255,255,0.3); color: var(--text); text-shadow: 0 0 10px rgba(0,0,0,0.5);">
+            Volver al inicio <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
   <div id="fish-tank-view" class="page-view hidden">
     <main class="project-detail-hero">
       <button class="text-link back-btn" onclick="transitionToHome(event)">
         <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
         Volver a la superficie
       </button>
-
       <div class="game-container">
         <h2 id="game-title">I LOST SOMETHING... CAN YOU FIND IT?</h2>
         <div id="game-feedback"></div>
-        
         <div id="game-area">
           <canvas id="gameCanvas"></canvas>
           <div id="game-pearl"></div>
         </div>
-
         <div id="game-win-screen">
           <h3 id="game-quote">Frase</h3>
           <button id="game-restart" class="theme-btn" style="background: var(--glass-bg);">JUGAR DE NUEVO</button>
@@ -1309,20 +952,17 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;display:flex;justify
     <span>© 2026 Martín Silva</span>
     <span>Diseño Industrial · Buenos Aires</span>
     <a href="#inicio" class="text-link" onclick="transitionToHome(event)">
-      Volver arriba 
-      <svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+      Volver arriba <svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
     </a>
   </footer>
 </div>
 
 <script>
-// VECTORES SVG PARA MODO TEMA Y HAMBURGUESA
 const sunIconSvg = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
 const moonIconSvg = `<svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
 const burgerSvg = `<svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`;
 const closeSvg = `<svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
 
-// MENÚ DESPLEGABLE MÓVIL
 const menuToggle = document.getElementById('menuToggle');
 const mobileMenu = document.getElementById('mobileMenu');
 const menuIcon = document.getElementById('menuIcon');
@@ -1332,14 +972,8 @@ menuToggle.addEventListener('click', () => {
   menuToggle.setAttribute('aria-expanded', isOpen);
   menuToggle.innerHTML = isOpen ? closeSvg : burgerSvg;
 });
+function closeMobileMenu() { mobileMenu.classList.remove('open'); menuToggle.setAttribute('aria-expanded', 'false'); menuToggle.innerHTML = burgerSvg; }
 
-function closeMobileMenu() {
-  mobileMenu.classList.remove('open');
-  menuToggle.setAttribute('aria-expanded', 'false');
-  menuToggle.innerHTML = burgerSvg;
-}
-
-// TRANSICIÓN DE TEMA
 const themeToggleBtn = document.getElementById('themeToggle');
 const themeIcon = document.getElementById('themeIcon');
 const themeLabel = document.getElementById('themeLabel');
@@ -1348,453 +982,167 @@ const htmlEl = document.documentElement;
 
 themeToggleBtn.addEventListener('click', () => {
   flashWave.classList.add('triggering');
-
   setTimeout(() => {
     const isDark = htmlEl.getAttribute('data-theme') === 'dark';
-    if (isDark) {
-      htmlEl.setAttribute('data-theme', 'light');
-      themeIcon.innerHTML = moonIconSvg;
-      themeLabel.textContent = 'Modo Noche';
-    } else {
-      htmlEl.setAttribute('data-theme', 'dark');
-      themeIcon.innerHTML = sunIconSvg;
-      themeLabel.textContent = 'Modo Día';
-    }
+    if (isDark) { htmlEl.setAttribute('data-theme', 'light'); themeIcon.innerHTML = moonIconSvg; themeLabel.textContent = 'Modo Noche'; } 
+    else { htmlEl.setAttribute('data-theme', 'dark'); themeIcon.innerHTML = sunIconSvg; themeLabel.textContent = 'Modo Día'; }
   }, 900);
-
-  setTimeout(() => {
-    flashWave.classList.remove('triggering');
-  }, 2000);
+  setTimeout(() => { flashWave.classList.remove('triggering'); }, 2000);
 });
 
-// TRANSICIÓN FULLSCREEN LIQUID GLASS DE NAVEGACIÓN
 const glassOverlay = document.getElementById('glassTransitionOverlay');
+function executeLiquidGlassTransition(callback) { glassOverlay.classList.add('active'); setTimeout(() => { callback(); }, 400); setTimeout(() => { glassOverlay.classList.remove('active'); }, 850); }
 
-function executeLiquidGlassTransition(callback) {
-  glassOverlay.classList.add('active');
-  setTimeout(() => { callback(); }, 400);
-  setTimeout(() => { glassOverlay.classList.remove('active'); }, 850);
-}
-
-// LÓGICA DE NAVEGACIÓN SPA
 function transitionToProject(projectId) {
   closeMobileMenu();
   executeLiquidGlassTransition(() => {
     document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden'));
-    document.getElementById('project-wall-cladding').classList.remove('hidden');
+    const targetProject = document.getElementById('project-' + projectId);
+    if(targetProject) targetProject.classList.remove('hidden');
     window.scrollTo({ top: 0, behavior: 'instant' });
   });
 }
 
 function transitionToHome(e, sectionId) {
-  if (e) e.preventDefault();
-  closeMobileMenu();
+  if (e) e.preventDefault(); closeMobileMenu();
   executeLiquidGlassTransition(() => {
     document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden'));
     document.getElementById('home-view').classList.remove('hidden');
-
-    if (sectionId) {
-      const el = document.getElementById(sectionId);
-      if (el) el.scrollIntoView({ behavior: 'instant' });
-    } else {
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    }
+    if (sectionId) { const el = document.getElementById(sectionId); if (el) el.scrollIntoView({ behavior: 'instant' }); } 
+    else { window.scrollTo({ top: 0, behavior: 'instant' }); }
   });
 }
+function transitionToHomeMobile(e, sectionId) { transitionToHome(e, sectionId); }
 
-function transitionToHomeMobile(e, sectionId) {
-  transitionToHome(e, sectionId);
+function setupCarousel(trackId, prevId, nextId) {
+  const track = document.getElementById(trackId), prevBtn = prevId ? document.getElementById(prevId) : null, nextBtn = nextId ? document.getElementById(nextId) : null;
+  if (!track || track.dataset.carouselReady === 'true') return;
+  track.dataset.carouselReady = 'true';
+  const step = () => { const slide = track.querySelector('.carousel-slide-wrapper'); return slide ? slide.getBoundingClientRect().width + parseFloat(getComputedStyle(track).gap || 0) : track.clientWidth * .8; };
+  if (prevBtn) prevBtn.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+  if (nextBtn) nextBtn.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+  let down = false, startX = 0, startScroll = 0, moved = false;
+  track.addEventListener('pointerdown', e => { if (e.pointerType === 'touch') return; down = true; moved = false; startX = e.clientX; startScroll = track.scrollLeft; track.classList.add('is-dragging'); });
+  window.addEventListener('pointerup', () => { down = false; track.classList.remove('is-dragging'); });
+  track.addEventListener('pointermove', e => { if (!down) return; const dx = e.clientX - startX; if (Math.abs(dx) > 4) moved = true; if (moved) { track.scrollLeft = startScroll - dx; e.preventDefault(); } });
+  track.addEventListener('click', e => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
 }
+function setupAllCarousels() { document.querySelectorAll('.carousel-track').forEach((track, i) => { const container = track.closest('.carousel-container'); const prev = container?.querySelector('.carousel-btn[aria-label="Anterior"]'); const next = container?.querySelector('.carousel-btn[aria-label="Siguiente"]'); if (!track.id) track.id = `carousel-track-${i}`; setupCarousel(track.id, prev?.id, next?.id); }); }
+setupCarousel('renderTrackCarton', 'prevRenderCarton', 'nextRenderCarton');
+setupCarousel('renderTrackPosters', 'prevRenderPosters', 'nextRenderPosters');
+setupAllCarousels();
 
-// LOGICA DEL CARRUSEL DE RENDERS
-const track = document.getElementById('renderTrack');
-const prevBtn = document.getElementById('prevRender');
-const nextBtn = document.getElementById('nextRender');
-
-if (track && prevBtn && nextBtn) {
-  prevBtn.addEventListener('click', () => {
-    const scrollAmount = track.clientWidth * 0.5;
-    track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-  });
-  nextBtn.addEventListener('click', () => {
-    const scrollAmount = track.clientWidth * 0.5;
-    track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-  });
-}
-
-// FRASES MOTIVADORAS PARA EL MINIJUEGO
-const gameQuotes = [
-  "El éxito es la suma de pequeños esfuerzos repetidos <span>día tras día.</span>",
-  "No te detengas hasta que te sientas <span>orgulloso.</span>",
-  "El único límite para tu impacto es tu <span>imaginación.</span>",
-  "La creatividad es la inteligencia <span>divirtiéndose.</span>",
-  "Cada gran diseño comienza con una <span>historia aún mejor.</span>",
-  "Haz de cada detalle un <span>universo de posibilidades.</span>",
-  "Si puedes imaginarlo, puedes <span>diseñarlo.</span>",
-  "El fracaso es la oportunidad de comenzar de nuevo con <span>más inteligencia.</span>",
-  "Los grandes logros nacen de grandes <span>sacrificios.</span>",
-  "Confía en el proceso, la magia <span>toma su tiempo.</span>",
-  "No busques errores, busca <span>soluciones.</span>",
-  "Tu motivación determina cuánto estás <span>dispuesto a hacer.</span>",
-  "Un buen diseño es obvio, un gran diseño es <span>transparente.</span>",
-  "La perseverancia es el motor del <span>talento.</span>",
-  "Atrévete a explorar los rincones oscuros de tu <span>creatividad.</span>",
-  "Todo lo que quieres está al otro lado del <span>miedo.</span>",
-  "Haz que tu trabajo hable por <span>sí mismo.</span>",
-  "Las ideas audaces avanzan siempre hacia <span>adelante.</span>",
-  "Diseña tu vida con la misma pasión que diseñas tus <span>proyectos.</span>",
-  "La inspiración existe, pero tiene que encontrarte <span>trabajando.</span>"
-];
-
-// LÓGICA DEL MINIJUEGO SECRETO CON MEDUSA EN CANVAS
-let treasureX = 0;
-let treasureY = 0;
-let isGameOver = false;
-let gameClickTarget = { x: -2000, y: -2000 };
-
-const gameArea = document.getElementById('game-area');
-const gameCanvas = document.getElementById('gameCanvas');
-const gCtx = gameCanvas.getContext('2d');
-const gameFeedback = document.getElementById('game-feedback');
-const gamePearl = document.getElementById('game-pearl');
-const gameWinScreen = document.getElementById('game-win-screen');
-const gameQuote = document.getElementById('game-quote');
-
-// Datos de la medusa miniatura para el juego
-let gJelly = {
-  x: 0, y: 0, vx: 0, vy: 0, angle: 0, targetAngle: 0, baseRadius: 18, 
-  opacity: 0.9, pulsePhase: 0, pulseSpeed: 0.04, contraction: 0,
-  numMarginalTentacles: 12, numOralArms: 4, tentacleSegments: 10, oralArmSegments: 9,
-  marginalTentacles: [], oralArms: []
-};
+// MINIJUEGO SECRETO
+const gameQuotes = ["El éxito es la suma de pequeños esfuerzos repetidos <span>día tras día.</span>", "No te detengas hasta que te sientas <span>orgulloso.</span>", "El único límite para tu impacto es tu <span>imaginación.</span>", "La creatividad es la inteligencia <span>divirtiéndose.</span>", "Cada gran diseño comienza con una <span>historia aún mejor.</span>", "Haz de cada detalle un <span>universo de posibilidades.</span>", "Si puedes imaginarlo, puedes <span>diseñarlo.</span>"];
+let treasureX = 0, treasureY = 0, isGameOver = false, gameClickTarget = { x: -2000, y: -2000 };
+const gameArea = document.getElementById('game-area'), gameCanvas = document.getElementById('gameCanvas'), gCtx = gameCanvas.getContext('2d'), gameFeedback = document.getElementById('game-feedback'), gamePearl = document.getElementById('game-pearl'), gameWinScreen = document.getElementById('game-win-screen'), gameQuote = document.getElementById('game-quote');
+let gJelly = { x: 0, y: 0, vx: 0, vy: 0, angle: 0, targetAngle: 0, baseRadius: 18, opacity: 0.9, pulsePhase: 0, pulseSpeed: 0.04, contraction: 0, numMarginalTentacles: 12, numOralArms: 4, tentacleSegments: 10, oralArmSegments: 9, marginalTentacles: [], oralArms: [] };
 
 function initFindTheJellyGame() {
-  const rect = gameArea.getBoundingClientRect();
-  gameCanvas.width = rect.width;
-  gameCanvas.height = rect.height;
-  
-  treasureX = Math.random() * (rect.width - 80) + 40;
-  treasureY = Math.random() * (rect.height - 120) + 60;
-  
-  isGameOver = false;
-  gamePearl.classList.remove('visible');
-  gameWinScreen.classList.remove('visible');
-  gameFeedback.textContent = '';
-  
-  gJelly.x = rect.width / 2;
-  gJelly.y = rect.height / 2;
-  gameClickTarget.x = gJelly.x;
-  gameClickTarget.y = gJelly.y;
-  
-  // Reiniciar tentáculos
-  gJelly.marginalTentacles = [];
-  gJelly.oralArms = [];
-  for (let i = 0; i < gJelly.numMarginalTentacles; i++) {
-    const pts = [];
-    for (let s = 0; s < gJelly.tentacleSegments; s++) pts.push({ x: gJelly.x, y: gJelly.y, oldX: gJelly.x, oldY: gJelly.y });
-    gJelly.marginalTentacles.push(pts);
-  }
-  for (let i = 0; i < gJelly.numOralArms; i++) {
-    const pts = [];
-    for (let s = 0; s < gJelly.oralArmSegments; s++) pts.push({ x: gJelly.x, y: gJelly.y, oldX: gJelly.x, oldY: gJelly.y });
-    gJelly.oralArms.push(pts);
-  }
+  const rect = gameArea.getBoundingClientRect(); gameCanvas.width = rect.width; gameCanvas.height = rect.height;
+  treasureX = Math.random() * (rect.width - 80) + 40; treasureY = Math.random() * (rect.height - 120) + 60;
+  isGameOver = false; gamePearl.classList.remove('visible'); gameWinScreen.classList.remove('visible'); gameFeedback.textContent = '';
+  gJelly.x = rect.width / 2; gJelly.y = rect.height / 2; gameClickTarget.x = gJelly.x; gameClickTarget.y = gJelly.y;
+  gJelly.marginalTentacles = []; gJelly.oralArms = [];
+  for (let i = 0; i < gJelly.numMarginalTentacles; i++) { const pts = []; for (let s = 0; s < gJelly.tentacleSegments; s++) pts.push({ x: gJelly.x, y: gJelly.y, oldX: gJelly.x, oldY: gJelly.y }); gJelly.marginalTentacles.push(pts); }
+  for (let i = 0; i < gJelly.numOralArms; i++) { const pts = []; for (let s = 0; s < gJelly.oralArmSegments; s++) pts.push({ x: gJelly.x, y: gJelly.y, oldX: gJelly.x, oldY: gJelly.y }); gJelly.oralArms.push(pts); }
 }
 
 function transitionToSecretTank() {
-  closeMobileMenu();
-  executeLiquidGlassTransition(() => {
+  closeMobileMenu(); executeLiquidGlassTransition(() => {
     document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden'));
-    document.getElementById('fish-tank-view').classList.remove('hidden');
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    initFindTheJellyGame();
-    if (!gameLoopRunning) animateGameCanvas();
+    document.getElementById('fish-tank-view').classList.remove('hidden'); window.scrollTo({ top: 0, behavior: 'instant' });
+    initFindTheJellyGame(); if (!gameLoopRunning) animateGameCanvas();
   });
 }
 
 gameArea.addEventListener('mousedown', (e) => handleGameInteraction(e.clientX, e.clientY));
-gameArea.addEventListener('touchstart', (e) => {
-  e.preventDefault(); 
-  handleGameInteraction(e.touches[0].clientX, e.touches[0].clientY);
-}, { passive: false });
+gameArea.addEventListener('touchstart', (e) => { e.preventDefault(); handleGameInteraction(e.touches[0].clientX, e.touches[0].clientY); }, { passive: false });
 
 function handleGameInteraction(clientX, clientY) {
   if (isGameOver) return;
-  const rect = gameArea.getBoundingClientRect();
-  const clickX = clientX - rect.left;
-  const clickY = clientY - rect.top;
-  
-  // La medusa reacciona al click
-  gameClickTarget.x = clickX;
-  gameClickTarget.y = clickY;
-  
+  const rect = gameArea.getBoundingClientRect(); const clickX = clientX - rect.left, clickY = clientY - rect.top;
+  gameClickTarget.x = clickX; gameClickTarget.y = clickY;
   const distToTreasure = Math.sqrt(Math.pow(clickX - treasureX, 2) + Math.pow(clickY - treasureY, 2));
-
   if (distToTreasure < 45) {
-    gameFeedback.textContent = 'HOT!';
-    gameFeedback.style.color = '#fff';
-    gamePearl.style.left = treasureX + 'px';
-    gamePearl.style.top = treasureY + 'px';
-    gamePearl.classList.add('visible');
-    
-    isGameOver = true;
-    setTimeout(() => { 
-      gameQuote.innerHTML = gameQuotes[Math.floor(Math.random() * gameQuotes.length)];
-      gameWinScreen.classList.add('visible'); 
-    }, 1200);
-  } else if (distToTreasure < 140) {
-    gameFeedback.textContent = 'HOT';
-    gameFeedback.style.color = 'var(--text)';
-  } else if (distToTreasure < 300) {
-    gameFeedback.textContent = 'WARM';
-    gameFeedback.style.color = 'var(--accent-light)';
-  } else {
-    gameFeedback.textContent = 'COLD';
-    gameFeedback.style.color = 'var(--muted)';
-  }
+    gameFeedback.textContent = 'HOT!'; gameFeedback.style.color = '#fff'; gamePearl.style.left = treasureX + 'px'; gamePearl.style.top = treasureY + 'px'; gamePearl.classList.add('visible');
+    isGameOver = true; setTimeout(() => { gameQuote.innerHTML = gameQuotes[Math.floor(Math.random() * gameQuotes.length)]; gameWinScreen.classList.add('visible'); }, 1200);
+  } else if (distToTreasure < 140) { gameFeedback.textContent = 'HOT'; gameFeedback.style.color = 'var(--text)';
+  } else if (distToTreasure < 300) { gameFeedback.textContent = 'WARM'; gameFeedback.style.color = 'var(--accent-light)';
+  } else { gameFeedback.textContent = 'COLD'; gameFeedback.style.color = 'var(--muted)'; }
 }
 document.getElementById('game-restart').addEventListener('click', initFindTheJellyGame);
 
-// Render loop exclusivo del juego
 let gameLoopRunning = false;
 function animateGameCanvas() {
   gameLoopRunning = true;
-  if (document.getElementById('fish-tank-view').classList.contains('hidden')) {
-    requestAnimationFrame(animateGameCanvas);
-    return;
-  }
-  
-  const w = gameCanvas.width;
-  const h = gameCanvas.height;
-  gCtx.clearRect(0, 0, w, h);
-  
-  // Lógica de movimiento hacia el click
-  const dx = gameClickTarget.x - gJelly.x;
-  const dy = gameClickTarget.y - gJelly.y;
-  const dist = Math.sqrt(dx * dx + dy * dy);
-  
-  if (dist > 15) {
-    gJelly.targetAngle = Math.atan2(dx, -dy);
-    gJelly.pulseSpeed = 0.06; // Nada más rápido
-  } else {
-    gJelly.pulseSpeed = 0.035; // Reposo
-  }
-
-  gJelly.pulsePhase += gJelly.pulseSpeed;
-  const rawSin = Math.sin(gJelly.pulsePhase);
-  gJelly.contraction = Math.pow(Math.max(0, rawSin), 2.2);
-
-  if (gJelly.contraction > 0.85 && dist > 15) {
-    const thrust = 0.5;
-    gJelly.vx += Math.sin(gJelly.angle) * thrust;
-    gJelly.vy -= Math.cos(gJelly.angle) * thrust;
-  }
-
-  gJelly.vx *= 0.94;
-  gJelly.vy *= 0.94;
-  gJelly.x += gJelly.vx;
-  gJelly.y += gJelly.vy;
-
-  let angleDiff = gJelly.targetAngle - gJelly.angle;
-  while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
-  while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
-  gJelly.angle += angleDiff * 0.08;
-
-  // Lógica de tentáculos (Adaptada para el minijuego)
-  const cosA = Math.cos(gJelly.angle);
-  const sinA = Math.sin(gJelly.angle);
-  const rad = gJelly.baseRadius * (1 - gJelly.contraction * 0.25);
+  if (document.getElementById('fish-tank-view').classList.contains('hidden')) { requestAnimationFrame(animateGameCanvas); return; }
+  const w = gameCanvas.width, h = gameCanvas.height; gCtx.clearRect(0, 0, w, h);
+  const dx = gameClickTarget.x - gJelly.x, dy = gameClickTarget.y - gJelly.y, dist = Math.sqrt(dx * dx + dy * dy);
+  if (dist > 15) { gJelly.targetAngle = Math.atan2(dx, -dy); gJelly.pulseSpeed = 0.06; } else { gJelly.pulseSpeed = 0.035; }
+  gJelly.pulsePhase += gJelly.pulseSpeed; const rawSin = Math.sin(gJelly.pulsePhase); gJelly.contraction = Math.pow(Math.max(0, rawSin), 2.2);
+  if (gJelly.contraction > 0.85 && dist > 15) { const thrust = 0.5; gJelly.vx += Math.sin(gJelly.angle) * thrust; gJelly.vy -= Math.cos(gJelly.angle) * thrust; }
+  gJelly.vx *= 0.94; gJelly.vy *= 0.94; gJelly.x += gJelly.vx; gJelly.y += gJelly.vy;
+  let angleDiff = gJelly.targetAngle - gJelly.angle; while (angleDiff < -Math.PI) angleDiff += Math.PI * 2; while (angleDiff > Math.PI) angleDiff -= Math.PI * 2; gJelly.angle += angleDiff * 0.08;
+  const cosA = Math.cos(gJelly.angle), sinA = Math.sin(gJelly.angle), rad = gJelly.baseRadius * (1 - gJelly.contraction * 0.25);
 
   gJelly.marginalTentacles.forEach((tentacle, idx) => {
-    const relIdx = (idx / (gJelly.numMarginalTentacles - 1)) - 0.5; 
-    const offsetAngle = relIdx * Math.PI * 0.85;
-    const anchorX = gJelly.x + Math.sin(gJelly.angle + offsetAngle) * rad;
-    const anchorY = gJelly.y - Math.cos(gJelly.angle + offsetAngle) * (rad * 0.4);
-
-    let prevX = anchorX; let prevY = anchorY;
+    const offsetAngle = ((idx / (gJelly.numMarginalTentacles - 1)) - 0.5) * Math.PI * 0.85;
+    let prevX = gJelly.x + Math.sin(gJelly.angle + offsetAngle) * rad, prevY = gJelly.y - Math.cos(gJelly.angle + offsetAngle) * (rad * 0.4);
     tentacle.forEach((seg, sIdx) => {
-      seg.oldX = seg.x; seg.oldY = seg.y;
-      const wave = Math.sin(gJelly.pulsePhase * 1.5 + sIdx * 0.4 + idx) * (1.0 + sIdx * 0.2);
-      seg.x += (seg.x - seg.oldX)*0.88 + sinA * 0.1 + wave * 0.2;
-      seg.y += (seg.y - seg.oldY)*0.88 - cosA * -0.2 + 0.1; 
-
-      const segLen = 2.8;
+      seg.oldX = seg.x; seg.oldY = seg.y; const wave = Math.sin(gJelly.pulsePhase * 1.5 + sIdx * 0.4 + idx) * (1.0 + sIdx * 0.2);
+      seg.x += (seg.x - seg.oldX)*0.88 + sinA * 0.1 + wave * 0.2; seg.y += (seg.y - seg.oldY)*0.88 - cosA * -0.2 + 0.1; 
       const dS = Math.sqrt(Math.pow(seg.x - prevX, 2) + Math.pow(seg.y - prevY, 2)) || 1;
-      seg.x = prevX + ((seg.x - prevX) / dS) * segLen;
-      seg.y = prevY + ((seg.y - prevY) / dS) * segLen;
-      prevX = seg.x; prevY = seg.y;
+      seg.x = prevX + ((seg.x - prevX) / dS) * 2.8; seg.y = prevY + ((seg.y - prevY) / dS) * 2.8; prevX = seg.x; prevY = seg.y;
     });
   });
 
   gJelly.oralArms.forEach((arm, idx) => {
-    const armOffset = (idx - 1.5) * 3;
-    const anchorX = gJelly.x + cosA * armOffset;
-    const anchorY = gJelly.y + sinA * armOffset + rad * 0.2;
-
-    let prevX = anchorX; let prevY = anchorY;
+    const armOffset = (idx - 1.5) * 3; let prevX = gJelly.x + cosA * armOffset, prevY = gJelly.y + sinA * armOffset + rad * 0.2;
     arm.forEach((seg, sIdx) => {
-      seg.oldX = seg.x; seg.oldY = seg.y;
-      const wave = Math.sin(gJelly.pulsePhase + sIdx * 0.35 + idx * 1.5) * (1.5 + sIdx * 0.3);
-      seg.x += (seg.x - seg.oldX)*0.82 + wave * 0.25;
-      seg.y += (seg.y - seg.oldY)*0.82 + 0.1;
-
-      const segLen = 3.8;
+      seg.oldX = seg.x; seg.oldY = seg.y; const wave = Math.sin(gJelly.pulsePhase + sIdx * 0.35 + idx * 1.5) * (1.5 + sIdx * 0.3);
+      seg.x += (seg.x - seg.oldX)*0.82 + wave * 0.25; seg.y += (seg.y - seg.oldY)*0.82 + 0.1;
       const dS = Math.sqrt(Math.pow(seg.x - prevX, 2) + Math.pow(seg.y - prevY, 2)) || 1;
-      seg.x = prevX + ((seg.x - prevX) / dS) * segLen;
-      seg.y = prevY + ((seg.y - prevY) / dS) * segLen;
-      prevX = seg.x; prevY = seg.y;
+      seg.x = prevX + ((seg.x - prevX) / dS) * 3.8; seg.y = prevY + ((seg.y - prevY) / dS) * 3.8; prevX = seg.x; prevY = seg.y;
     });
   });
 
-  // Dibujar Medusa (Estética de la web)
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  const op = gJelly.opacity;
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark', op = gJelly.opacity;
   const strokeRim = isDark ? `rgba(180, 240, 215, ${op * 0.85})` : `rgba(35, 65, 45, ${op * 0.75})`;
   const bodyGlow  = isDark ? `rgba(100, 210, 160, ${op * 0.22})` : `rgba(50, 95, 65, ${op * 0.16})`;
   const innerCore = isDark ? `rgba(220, 255, 235, ${op * 0.9})`  : `rgba(20, 50, 30, ${op * 0.85})`;
   const armColor  = isDark ? `rgba(130, 220, 180, ${op * 0.35})` : `rgba(45, 80, 55, ${op * 0.25})`;
   const tentacleCol = isDark ? `rgba(160, 235, 205, ${op * 0.4})` : `rgba(40, 75, 50, ${op * 0.3})`;
 
-  gCtx.save();
-  gCtx.lineWidth = 2.5; gCtx.strokeStyle = armColor; gCtx.lineCap = 'round';
+  gCtx.save(); gCtx.lineWidth = 2.5; gCtx.strokeStyle = armColor; gCtx.lineCap = 'round';
   gJelly.oralArms.forEach((arm, aIdx) => {
-    gCtx.beginPath(); gCtx.moveTo(arm[0].x, arm[0].y);
-    for (let i = 1; i < arm.length - 1; i++) {
-      gCtx.quadraticCurveTo(arm[i].x, arm[i].y, (arm[i].x + arm[i + 1].x)/2, (arm[i].y + arm[i + 1].y)/2);
-    }
-    gCtx.stroke();
-    gCtx.beginPath(); gCtx.lineWidth = 1; gCtx.strokeStyle = bodyGlow;
-    for (let i = 2; i < arm.length; i += 2) gCtx.arc(arm[i].x + (aIdx%2===0?1:-1)*2, arm[i].y, 1.2, 0, Math.PI * 2);
-    gCtx.stroke();
+    gCtx.beginPath(); gCtx.moveTo(arm[0].x, arm[0].y); for (let i = 1; i < arm.length - 1; i++) gCtx.quadraticCurveTo(arm[i].x, arm[i].y, (arm[i].x + arm[i + 1].x)/2, (arm[i].y + arm[i + 1].y)/2); gCtx.stroke();
+    gCtx.beginPath(); gCtx.lineWidth = 1; gCtx.strokeStyle = bodyGlow; for (let i = 2; i < arm.length; i += 2) gCtx.arc(arm[i].x + (aIdx%2===0?1:-1)*2, arm[i].y, 1.2, 0, Math.PI * 2); gCtx.stroke();
   });
-
   gCtx.lineWidth = 0.7; gCtx.strokeStyle = tentacleCol;
   gJelly.marginalTentacles.forEach((tentacle) => {
-    gCtx.beginPath(); gCtx.moveTo(tentacle[0].x, tentacle[0].y);
-    for (let i = 1; i < tentacle.length - 1; i++) {
-      gCtx.quadraticCurveTo(tentacle[i].x, tentacle[i].y, (tentacle[i].x + tentacle[i + 1].x)/2, (tentacle[i].y + tentacle[i + 1].y)/2);
-    }
-    gCtx.stroke();
+    gCtx.beginPath(); gCtx.moveTo(tentacle[0].x, tentacle[0].y); for (let i = 1; i < tentacle.length - 1; i++) gCtx.quadraticCurveTo(tentacle[i].x, tentacle[i].y, (tentacle[i].x + tentacle[i + 1].x)/2, (tentacle[i].y + tentacle[i + 1].y)/2); gCtx.stroke();
   });
 
-  gCtx.translate(gJelly.x, gJelly.y);
-  gCtx.rotate(gJelly.angle);
-  const squishY = 1 - gJelly.contraction * 0.35; 
-  const squishX = 1 + gJelly.contraction * 0.2;  
-
-  gCtx.shadowBlur = isDark ? 12 : 6; gCtx.shadowColor = strokeRim;
-  const gonadR = gJelly.baseRadius * 0.32;
-  gCtx.fillStyle = innerCore;
-  for (let g = 0; g < 4; g++) {
-    const gAngle = (g * Math.PI / 2) + Math.PI / 4;
-    gCtx.beginPath();
-    gCtx.ellipse(Math.cos(gAngle)*(gonadR*0.85), Math.sin(gAngle)*(gonadR*0.6*squishY), gonadR*0.4, gonadR*0.28, gAngle, 0, Math.PI * 2);
-    gCtx.fill();
-  }
-
+  gCtx.translate(gJelly.x, gJelly.y); gCtx.rotate(gJelly.angle);
+  const squishY = 1 - gJelly.contraction * 0.35, squishX = 1 + gJelly.contraction * 0.2;  
+  gCtx.shadowBlur = isDark ? 12 : 6; gCtx.shadowColor = strokeRim; const gonadR = gJelly.baseRadius * 0.32; gCtx.fillStyle = innerCore;
+  for (let g = 0; g < 4; g++) { const gAngle = (g * Math.PI / 2) + Math.PI / 4; gCtx.beginPath(); gCtx.ellipse(Math.cos(gAngle)*(gonadR*0.85), Math.sin(gAngle)*(gonadR*0.6*squishY), gonadR*0.4, gonadR*0.28, gAngle, 0, Math.PI * 2); gCtx.fill(); }
   gCtx.lineWidth = 0.6; gCtx.strokeStyle = bodyGlow;
-  for (let c = 0; c < 8; c++) {
-    const cAngle = (c * Math.PI / 4) - Math.PI / 2;
-    gCtx.beginPath(); gCtx.moveTo(0, -rad * 0.2);
-    gCtx.quadraticCurveTo(Math.cos(cAngle)*rad*0.6*squishX, Math.sin(cAngle)*rad*0.6*squishY, Math.cos(cAngle)*rad*0.9*squishX, Math.sin(cAngle)*rad*0.75*squishY);
-    gCtx.stroke();
-  }
-
-  gCtx.beginPath();
-  gCtx.moveTo(-rad * squishX, 0);
-  gCtx.bezierCurveTo(-rad * 1.05 * squishX, -rad * 1.35 * squishY, rad * 1.05 * squishX, -rad * 1.35 * squishY, rad * squishX, 0);
-  const lobes = 6; const lobeStep = (rad * 2 * squishX) / lobes;
-  for (let l = lobes; l >= 0; l--) {
-    const lx = -rad * squishX + l * lobeStep;
-    gCtx.quadraticCurveTo(lx + lobeStep / 2, 5 * squishY, lx, Math.sin((l / lobes) * Math.PI) * (3 * squishY));
-  }
+  for (let c = 0; c < 8; c++) { const cAngle = (c * Math.PI / 4) - Math.PI / 2; gCtx.beginPath(); gCtx.moveTo(0, -rad * 0.2); gCtx.quadraticCurveTo(Math.cos(cAngle)*rad*0.6*squishX, Math.sin(cAngle)*rad*0.6*squishY, Math.cos(cAngle)*rad*0.9*squishX, Math.sin(cAngle)*rad*0.75*squishY); gCtx.stroke(); }
+  gCtx.beginPath(); gCtx.moveTo(-rad * squishX, 0); gCtx.bezierCurveTo(-rad * 1.05 * squishX, -rad * 1.35 * squishY, rad * 1.05 * squishX, -rad * 1.35 * squishY, rad * squishX, 0);
+  const lobes = 6, lobeStep = (rad * 2 * squishX) / lobes;
+  for (let l = lobes; l >= 0; l--) { const lx = -rad * squishX + l * lobeStep; gCtx.quadraticCurveTo(lx + lobeStep / 2, 5 * squishY, lx, Math.sin((l / lobes) * Math.PI) * (3 * squishY)); }
   gCtx.closePath();
-
   const grad = gCtx.createRadialGradient(0, -rad * 0.4, rad * 0.1, 0, 0, rad * 1.1);
   grad.addColorStop(0, innerCore); grad.addColorStop(0.45, bodyGlow); grad.addColorStop(1, 'rgba(0,0,0,0)');
-  gCtx.fillStyle = grad; gCtx.fill();
-  gCtx.lineWidth = 1; gCtx.strokeStyle = strokeRim; gCtx.stroke();
-  gCtx.restore();
+  gCtx.fillStyle = grad; gCtx.fill(); gCtx.lineWidth = 1; gCtx.strokeStyle = strokeRim; gCtx.stroke(); gCtx.restore();
 
   requestAnimationFrame(animateGameCanvas);
 }
 
-
 /* =========================================================================
-   SISTEMA DE ALGAS FLUIDAS (SIN ROCAS)
-   ========================================================================= */
-(function initAlgaeBackground() {
-  const canvas = document.getElementById('algaeCanvas');
-  const ctx = canvas.getContext('2d');
-  let w, h;
-  
-  function resize() {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = 650; 
-  }
-  window.addEventListener('resize', resize);
-  resize();
-
-  const algae = [];
-  const algaeCount = window.innerWidth > 768 ? 16 : 8;
-  
-  for (let i = 0; i < algaeCount; i++) {
-    algae.push({
-      x: Math.random() * w,
-      baseWidth: Math.random() * 18 + 12,
-      segments: Math.floor(Math.random() * 6 + 7),
-      segmentHeight: Math.random() * 55 + 45,
-      swayPhase: Math.random() * Math.PI * 2,
-      swaySpeed: Math.random() * 0.007 + 0.003,
-      swayAmount: Math.random() * 1.6 + 0.9,
-    });
-  }
-
-  let globalTime = 0;
-
-  function drawAlgaeOnly() {
-    requestAnimationFrame(drawAlgaeOnly);
-    
-    if (document.getElementById('home-view').classList.contains('hidden')) return;
-
-    ctx.clearRect(0, 0, w, h);
-    globalTime++;
-
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const algColor = isDark ? 'rgba(130, 210, 165, 0.14)' : 'rgba(45, 75, 52, 0.09)';
-    const glowColor = isDark ? 'rgba(100, 245, 190, 0.08)' : 'transparent'; 
-
-    algae.forEach(alg => {
-      ctx.beginPath();
-      const pts = [];
-      
-      for (let i = 0; i <= alg.segments; i++) {
-         const phase = globalTime * alg.swaySpeed + alg.swayPhase - i * 0.28;
-         const xOffset = Math.sin(phase) * (i * i * alg.swayAmount * 0.12);
-         pts.push({ x: alg.x + xOffset, y: h - (i * alg.segmentHeight), w: alg.baseWidth * Math.max(0.1, (1 - i / alg.segments)) });
-      }
-      
-      ctx.moveTo(pts[0].x + pts[0].w, pts[0].y);
-      for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x + pts[i].w, pts[i].y);
-      for (let i = pts.length - 1; i >= 0; i--) ctx.lineTo(pts[i].x - pts[i].w, pts[i].y);
-      
-      ctx.closePath();
-      ctx.fillStyle = algColor;
-      ctx.fill();
-
-      if (isDark) {
-        ctx.strokeStyle = glowColor;
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-      }
-    });
-  }
-  drawAlgaeOnly();
-})();
-
-
-/* =========================================================================
-   SISTEMA DE MEDUSA BIOLUMINISCENTE Y PLANCTON EN CANVAS FIJO
+   MEDUSA BIO-CAMALEÓNICA INTERACTIVA EN CANVAS FIJO
    ========================================================================= */
 (function initHyperrealisticJellyfish() {
   const canvas = document.getElementById('jellyfishCanvas');
@@ -1802,15 +1150,10 @@ function animateGameCanvas() {
   let width = (canvas.width = window.innerWidth);
   let height = (canvas.height = window.innerHeight);
 
-  window.addEventListener('resize', () => {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-  });
+  window.addEventListener('resize', () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; });
 
   let mouse = { x: -2000, y: -2000, active: false };
-  window.addEventListener('mousemove', (e) => {
-    mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true;
-  });
+  window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true; });
   window.addEventListener('mouseleave', () => { mouse.active = false; });
 
   const plankton = Array.from({ length: 35 }, () => ({
@@ -1822,20 +1165,13 @@ function animateGameCanvas() {
   const jelly = {
     x: width * 0.75, y: height * 0.35, vx: 0, vy: -0.2, angle: 0, targetAngle: 0, baseRadius: 28, 
     opacity: 0.85, targetOpacity: 0.85, pulsePhase: 0, pulseSpeed: 0.035, contraction: 0, 
-    numMarginalTentacles: 16, numOralArms: 4, tentacleSegments: 14, oralArmSegments: 12,
-    marginalTentacles: [], oralArms: []
+    numMarginalTentacles: 16, numOralArms: 4, tentacleSegments: 14, oralArmSegments: 12, marginalTentacles: [], oralArms: [],
+    // Sistema Camaleónico: Colores RGB actuales que se irán interpolando
+    c: { core: [220, 255, 235], glow: [100, 210, 160], rim: [180, 240, 215], arms: [130, 220, 180], ten: [160, 235, 205] }
   };
 
-  for (let i = 0; i < jelly.numMarginalTentacles; i++) {
-    const pts = [];
-    for (let s = 0; s < jelly.tentacleSegments; s++) pts.push({ x: jelly.x, y: jelly.y, oldX: jelly.x, oldY: jelly.y });
-    jelly.marginalTentacles.push(pts);
-  }
-  for (let i = 0; i < jelly.numOralArms; i++) {
-    const pts = [];
-    for (let s = 0; s < jelly.oralArmSegments; s++) pts.push({ x: jelly.x, y: jelly.y, oldX: jelly.x, oldY: jelly.y });
-    jelly.oralArms.push(pts);
-  }
+  for (let i = 0; i < jelly.numMarginalTentacles; i++) { const pts = []; for (let s = 0; s < jelly.tentacleSegments; s++) pts.push({ x: jelly.x, y: jelly.y, oldX: jelly.x, oldY: jelly.y }); jelly.marginalTentacles.push(pts); }
+  for (let i = 0; i < jelly.numOralArms; i++) { const pts = []; for (let s = 0; s < jelly.oralArmSegments; s++) pts.push({ x: jelly.x, y: jelly.y, oldX: jelly.x, oldY: jelly.y }); jelly.oralArms.push(pts); }
 
   window.addEventListener('click', (e) => {
     if (document.getElementById('home-view').classList.contains('hidden')) return;
@@ -1844,161 +1180,143 @@ function animateGameCanvas() {
   });
 
   function update() {
-    const dx = jelly.x - mouse.x; const dy = jelly.y - mouse.y;
-    const dist = Math.sqrt(dx * dx + dy * dy);
+    const dx = jelly.x - mouse.x, dy = jelly.y - mouse.y, dist = Math.sqrt(dx * dx + dy * dy);
     let isEscaping = false;
 
     if (mouse.active && dist < 150) {
       isEscaping = true; jelly.targetOpacity = 0.7; 
       const escapeAngle = Math.atan2(dy, dx) + (Math.random() - 0.5) * 0.2;
-      jelly.vx += Math.cos(escapeAngle) * 1.8; jelly.vy += Math.sin(escapeAngle) * 1.8;
-      jelly.pulseSpeed = 0.35; 
+      jelly.vx += Math.cos(escapeAngle) * 1.8; jelly.vy += Math.sin(escapeAngle) * 1.8; jelly.pulseSpeed = 0.35; 
     } else {
       jelly.targetOpacity = 0.88;
       if (jelly.pulseSpeed > 0.035) jelly.pulseSpeed *= 0.95; 
       if (jelly.pulseSpeed < 0.035) jelly.pulseSpeed = 0.035;
     }
 
-    jelly.opacity += (jelly.targetOpacity - jelly.opacity) * 0.05;
-    jelly.pulsePhase += jelly.pulseSpeed;
+    jelly.opacity += (jelly.targetOpacity - jelly.opacity) * 0.05; jelly.pulsePhase += jelly.pulseSpeed;
     jelly.contraction = Math.pow(Math.max(0, Math.sin(jelly.pulsePhase)), 2.2);
+    if (jelly.contraction > 0.85) { const thrust = 0.38 * (1 + jelly.contraction * 0.5); jelly.vx += Math.sin(jelly.angle) * thrust; jelly.vy -= Math.cos(jelly.angle) * thrust; }
 
-    if (jelly.contraction > 0.85) {
-      const thrust = 0.38 * (1 + jelly.contraction * 0.5);
-      jelly.vx += Math.sin(jelly.angle) * thrust; jelly.vy -= Math.cos(jelly.angle) * thrust;
-    }
-
-    jelly.vx *= 0.965; jelly.vy *= 0.965;
-    jelly.x += jelly.vx; jelly.y += jelly.vy;
-
+    jelly.vx *= 0.965; jelly.vy *= 0.965; jelly.x += jelly.vx; jelly.y += jelly.vy;
     if (!isEscaping && Math.random() < 0.02) jelly.targetAngle += (Math.random() - 0.5) * 0.6;
 
     const moveSpeed = Math.sqrt(jelly.vx * jelly.vx + jelly.vy * jelly.vy);
     if (moveSpeed > 0.15) {
       let angleDiff = Math.atan2(jelly.vx, -jelly.vy) - jelly.angle;
-      while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
-      while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
+      while (angleDiff < -Math.PI) angleDiff += Math.PI * 2; while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
       jelly.angle += angleDiff * 0.06;
-    } else {
-      jelly.angle += (jelly.targetAngle - jelly.angle) * 0.03;
-    }
+    } else { jelly.angle += (jelly.targetAngle - jelly.angle) * 0.03; }
 
     const margin = 80;
     if (jelly.x < margin) jelly.vx += 0.08; if (jelly.x > width - margin) jelly.vx -= 0.08;
     if (jelly.y < margin) jelly.vy += 0.08; if (jelly.y > height - margin) jelly.vy -= 0.08;
 
-    const cosA = Math.cos(jelly.angle); const sinA = Math.sin(jelly.angle);
-    const rad = jelly.baseRadius * (1 - jelly.contraction * 0.25);
+    const cosA = Math.cos(jelly.angle), sinA = Math.sin(jelly.angle), rad = jelly.baseRadius * (1 - jelly.contraction * 0.25);
 
     jelly.marginalTentacles.forEach((tentacle, idx) => {
-      const relIdx = (idx / (jelly.numMarginalTentacles - 1)) - 0.5; 
-      const offsetAngle = relIdx * Math.PI * 0.85;
-      let prevX = jelly.x + Math.sin(jelly.angle + offsetAngle) * rad;
-      let prevY = jelly.y - Math.cos(jelly.angle + offsetAngle) * (rad * 0.4);
-
+      const offsetAngle = ((idx / (jelly.numMarginalTentacles - 1)) - 0.5) * Math.PI * 0.85;
+      let prevX = jelly.x + Math.sin(jelly.angle + offsetAngle) * rad, prevY = jelly.y - Math.cos(jelly.angle + offsetAngle) * (rad * 0.4);
       tentacle.forEach((seg, sIdx) => {
-        const vxSec = (seg.x - seg.oldX) * 0.88; const vySec = (seg.y - seg.oldY) * 0.88;
-        seg.oldX = seg.x; seg.oldY = seg.y;
+        const vxSec = (seg.x - seg.oldX) * 0.88, vySec = (seg.y - seg.oldY) * 0.88; seg.oldX = seg.x; seg.oldY = seg.y;
         const wave = Math.sin(jelly.pulsePhase * 1.5 + sIdx * 0.4 + idx) * (1.2 + sIdx * 0.2);
         seg.x += vxSec + sinA * 0.15 + wave * 0.25; seg.y += vySec - cosA * -0.25 + 0.1; 
         const dS = Math.sqrt(Math.pow(seg.x - prevX, 2) + Math.pow(seg.y - prevY, 2)) || 1;
-        seg.x = prevX + ((seg.x - prevX) / dS) * 3.2; seg.y = prevY + ((seg.y - prevY) / dS) * 3.2;
-        prevX = seg.x; prevY = seg.y;
+        seg.x = prevX + ((seg.x - prevX) / dS) * 3.2; seg.y = prevY + ((seg.y - prevY) / dS) * 3.2; prevX = seg.x; prevY = seg.y;
       });
     });
 
     jelly.oralArms.forEach((arm, idx) => {
-      let prevX = jelly.x + cosA * ((idx - 1.5) * 4);
-      let prevY = jelly.y + sinA * ((idx - 1.5) * 4) + rad * 0.2;
-
+      let prevX = jelly.x + cosA * ((idx - 1.5) * 4), prevY = jelly.y + sinA * ((idx - 1.5) * 4) + rad * 0.2;
       arm.forEach((seg, sIdx) => {
-        const vxSec = (seg.x - seg.oldX) * 0.82; const vySec = (seg.y - seg.oldY) * 0.82;
-        seg.oldX = seg.x; seg.oldY = seg.y;
+        const vxSec = (seg.x - seg.oldX) * 0.82, vySec = (seg.y - seg.oldY) * 0.82; seg.oldX = seg.x; seg.oldY = seg.y;
         const wave = Math.sin(jelly.pulsePhase + sIdx * 0.35 + idx * 1.5) * (2.0 + sIdx * 0.3);
         seg.x += vxSec + wave * 0.3; seg.y += vySec + 0.15;
         const dS = Math.sqrt(Math.pow(seg.x - prevX, 2) + Math.pow(seg.y - prevY, 2)) || 1;
-        seg.x = prevX + ((seg.x - prevX) / dS) * 4.2; seg.y = prevY + ((seg.y - prevY) / dS) * 4.2;
-        prevX = seg.x; prevY = seg.y;
+        seg.x = prevX + ((seg.x - prevX) / dS) * 4.2; seg.y = prevY + ((seg.y - prevY) / dS) * 4.2; prevX = seg.x; prevY = seg.y;
       });
     });
 
-    plankton.forEach(p => {
-      p.x += p.vx; p.y += p.vy; p.pulse += 0.02;
-      if (p.x < 0) p.x = width; if (p.x > width) p.x = 0;
-      if (p.y < 0) p.y = height; if (p.y > height) p.y = 0;
+    plankton.forEach(p => { p.x += p.vx; p.y += p.vy; p.pulse += 0.02; if (p.x < 0) p.x = width; if (p.x > width) p.x = 0; if (p.y < 0) p.y = height; if (p.y > height) p.y = 0; });
+
+    /* LÓGICA DE COLOR CAMALEÓNICO (Basado en la posición Y absoluta) */
+    const absY = window.scrollY + jelly.y;
+    let activeZone = 'default';
+    ['pink-transition-zone', 'gray-transition-zone', 'vibrant-zone'].forEach(zoneClass => {
+      const el = document.querySelector('.' + zoneClass);
+      if (el && !el.closest('.hidden')) { // Verifica que esté visible
+        const rect = el.getBoundingClientRect();
+        // Si la posición Y relativa a la ventana está dentro de los límites del elemento
+        if (jelly.y >= rect.top && jelly.y <= rect.bottom) {
+          activeZone = zoneClass.split('-')[0]; // Extrae 'pink', 'gray' o 'vibrant'
+        }
+      }
+    });
+
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const palettes = {
+      default: isDark ?
+        { core: [220, 255, 235], glow: [100, 210, 160], rim: [180, 240, 215], arms: [130, 220, 180], ten: [160, 235, 205] } :
+        { core: [20, 50, 30], glow: [50, 95, 65], rim: [35, 65, 45], arms: [45, 80, 55], ten: [40, 75, 50] },
+      pink: { core: [255, 230, 240], glow: [227, 132, 165], rim: [240, 180, 200], arms: [220, 130, 170], ten: [235, 160, 190] },
+      gray: { core: [230, 230, 230], glow: [150, 150, 150], rim: [190, 190, 190], arms: [140, 140, 140], ten: [160, 160, 160] },
+      vibrant: { core: [220, 255, 255], glow: [0, 229, 255], rim: [150, 240, 255], arms: [0, 180, 255], ten: [100, 220, 255] }
+    };
+
+    // Interpolar (Lerp) de colores suavemente hacia el target
+    const targetPalette = palettes[activeZone];
+    ['core', 'glow', 'rim', 'arms', 'ten'].forEach(layer => {
+      for(let i = 0; i < 3; i++) jelly.c[layer][i] += (targetPalette[layer][i] - jelly.c[layer][i]) * 0.035;
     });
   }
+
+  // Helper para generar el string rgba a partir del arreglo lerpeado
+  function rgba(arr, alpha) { return `rgba(${Math.round(arr[0])}, ${Math.round(arr[1])}, ${Math.round(arr[2])}, ${alpha})`; }
 
   function draw() {
     ctx.clearRect(0, 0, width, height);
     if (jelly.opacity <= 0.01) return;
 
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     const op = jelly.opacity;
-    const strokeRim = isDark ? `rgba(180, 240, 215, ${op * 0.85})` : `rgba(35, 65, 45, ${op * 0.75})`;
-    const bodyGlow  = isDark ? `rgba(100, 210, 160, ${op * 0.22})` : `rgba(50, 95, 65, ${op * 0.16})`;
-    const innerCore = isDark ? `rgba(220, 255, 235, ${op * 0.9})`  : `rgba(20, 50, 30, ${op * 0.85})`;
-    const armColor  = isDark ? `rgba(130, 220, 180, ${op * 0.35})` : `rgba(45, 80, 55, ${op * 0.25})`;
-    const tentacleCol = isDark ? `rgba(160, 235, 205, ${op * 0.4})` : `rgba(40, 75, 50, ${op * 0.3})`;
+    // Colores dinámicos generados
+    const strokeRim = rgba(jelly.c.rim, op * 0.85);
+    const bodyGlow  = rgba(jelly.c.glow, op * 0.22);
+    const innerCore = rgba(jelly.c.core, op * 0.9);
+    const armColor  = rgba(jelly.c.arms, op * 0.35);
+    const tentacleCol = rgba(jelly.c.ten, op * 0.4);
+    
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     const planktonCol = isDark ? `rgba(160, 230, 190,` : `rgba(50, 85, 60,`;
 
-    plankton.forEach(p => {
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      ctx.fillStyle = `${planktonCol}${p.alpha * (0.6 + Math.sin(p.pulse) * 0.4) * op})`;
-      ctx.fill();
-    });
+    plankton.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fillStyle = `${planktonCol}${p.alpha * (0.6 + Math.sin(p.pulse) * 0.4) * op})`; ctx.fill(); });
 
     ctx.save(); ctx.lineWidth = 3.5; ctx.strokeStyle = armColor; ctx.lineCap = 'round';
     jelly.oralArms.forEach((arm, aIdx) => {
-      ctx.beginPath(); ctx.moveTo(arm[0].x, arm[0].y);
-      for (let i = 1; i < arm.length - 1; i++) ctx.quadraticCurveTo(arm[i].x, arm[i].y, (arm[i].x + arm[i + 1].x)/2, (arm[i].y + arm[i + 1].y)/2);
-      ctx.stroke();
-      ctx.beginPath(); ctx.lineWidth = 1.5; ctx.strokeStyle = bodyGlow;
-      for (let i = 2; i < arm.length; i += 2) ctx.arc(arm[i].x + (aIdx%2===0?1:-1)*3, arm[i].y, 1.8, 0, Math.PI * 2);
-      ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(arm[0].x, arm[0].y); for (let i = 1; i < arm.length - 1; i++) ctx.quadraticCurveTo(arm[i].x, arm[i].y, (arm[i].x + arm[i + 1].x)/2, (arm[i].y + arm[i + 1].y)/2); ctx.stroke();
+      ctx.beginPath(); ctx.lineWidth = 1.5; ctx.strokeStyle = bodyGlow; for (let i = 2; i < arm.length; i += 2) ctx.arc(arm[i].x + (aIdx%2===0?1:-1)*3, arm[i].y, 1.8, 0, Math.PI * 2); ctx.stroke();
     });
 
     ctx.lineWidth = 0.85; ctx.strokeStyle = tentacleCol;
     jelly.marginalTentacles.forEach((tentacle) => {
-      ctx.beginPath(); ctx.moveTo(tentacle[0].x, tentacle[0].y);
-      for (let i = 1; i < tentacle.length - 1; i++) ctx.quadraticCurveTo(tentacle[i].x, tentacle[i].y, (tentacle[i].x + tentacle[i + 1].x)/2, (tentacle[i].y + tentacle[i + 1].y)/2);
-      ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(tentacle[0].x, tentacle[0].y); for (let i = 1; i < tentacle.length - 1; i++) ctx.quadraticCurveTo(tentacle[i].x, tentacle[i].y, (tentacle[i].x + tentacle[i + 1].x)/2, (tentacle[i].y + tentacle[i + 1].y)/2); ctx.stroke();
     });
 
     ctx.translate(jelly.x, jelly.y); ctx.rotate(jelly.angle);
-    const squishY = 1 - jelly.contraction * 0.35; const squishX = 1 + jelly.contraction * 0.2;  
+    const squishY = 1 - jelly.contraction * 0.35, squishX = 1 + jelly.contraction * 0.2;  
 
-    ctx.shadowBlur = isDark ? 16 : 8; ctx.shadowColor = strokeRim;
-    const gonadR = jelly.baseRadius * 0.32; ctx.fillStyle = innerCore;
-    for (let g = 0; g < 4; g++) {
-      const gAngle = (g * Math.PI / 2) + Math.PI / 4;
-      ctx.beginPath(); ctx.ellipse(Math.cos(gAngle)*(gonadR*0.85), Math.sin(gAngle)*(gonadR*0.6*squishY), gonadR*0.4, gonadR*0.28, gAngle, 0, Math.PI * 2);
-      ctx.fill();
-    }
+    ctx.shadowBlur = isDark ? 16 : 8; ctx.shadowColor = strokeRim; const gonadR = jelly.baseRadius * 0.32; ctx.fillStyle = innerCore;
+    for (let g = 0; g < 4; g++) { const gAngle = (g * Math.PI / 2) + Math.PI / 4; ctx.beginPath(); ctx.ellipse(Math.cos(gAngle)*(gonadR*0.85), Math.sin(gAngle)*(gonadR*0.6*squishY), gonadR*0.4, gonadR*0.28, gAngle, 0, Math.PI * 2); ctx.fill(); }
 
     ctx.lineWidth = 0.7; ctx.strokeStyle = bodyGlow;
-    for (let c = 0; c < 8; c++) {
-      const cAngle = (c * Math.PI / 4) - Math.PI / 2;
-      ctx.beginPath(); ctx.moveTo(0, -jelly.baseRadius * 0.2);
-      ctx.quadraticCurveTo(Math.cos(cAngle)*jelly.baseRadius*0.6*squishX, Math.sin(cAngle)*jelly.baseRadius*0.6*squishY, Math.cos(cAngle)*jelly.baseRadius*0.92*squishX, Math.sin(cAngle)*jelly.baseRadius*0.75*squishY);
-      ctx.stroke();
-    }
+    for (let c = 0; c < 8; c++) { const cAngle = (c * Math.PI / 4) - Math.PI / 2; ctx.beginPath(); ctx.moveTo(0, -jelly.baseRadius * 0.2); ctx.quadraticCurveTo(Math.cos(cAngle)*jelly.baseRadius*0.6*squishX, Math.sin(cAngle)*jelly.baseRadius*0.6*squishY, Math.cos(cAngle)*jelly.baseRadius*0.92*squishX, Math.sin(cAngle)*jelly.baseRadius*0.75*squishY); ctx.stroke(); }
 
-    ctx.beginPath();
-    ctx.moveTo(-jelly.baseRadius * squishX, 0);
-    ctx.bezierCurveTo(-jelly.baseRadius * 1.05 * squishX, -jelly.baseRadius * 1.35 * squishY, jelly.baseRadius * 1.05 * squishX, -jelly.baseRadius * 1.35 * squishY, jelly.baseRadius * squishX, 0);
-    const lobes = 6; const lobeStep = (jelly.baseRadius * 2 * squishX) / lobes;
-    for (let l = lobes; l >= 0; l--) {
-      const lx = -jelly.baseRadius * squishX + l * lobeStep;
-      ctx.quadraticCurveTo(lx + lobeStep / 2, 6 * squishY, lx, Math.sin((l / lobes) * Math.PI) * (3.5 * squishY));
-    }
+    ctx.beginPath(); ctx.moveTo(-jelly.baseRadius * squishX, 0); ctx.bezierCurveTo(-jelly.baseRadius * 1.05 * squishX, -jelly.baseRadius * 1.35 * squishY, jelly.baseRadius * 1.05 * squishX, -jelly.baseRadius * 1.35 * squishY, jelly.baseRadius * squishX, 0);
+    const lobes = 6, lobeStep = (jelly.baseRadius * 2 * squishX) / lobes;
+    for (let l = lobes; l >= 0; l--) { const lx = -jelly.baseRadius * squishX + l * lobeStep; ctx.quadraticCurveTo(lx + lobeStep / 2, 6 * squishY, lx, Math.sin((l / lobes) * Math.PI) * (3.5 * squishY)); }
     ctx.closePath();
 
     const grad = ctx.createRadialGradient(0, -jelly.baseRadius * 0.4, jelly.baseRadius * 0.1, 0, 0, jelly.baseRadius * 1.1);
     grad.addColorStop(0, innerCore); grad.addColorStop(0.45, bodyGlow); grad.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = grad; ctx.fill();
-    ctx.lineWidth = 1.3; ctx.strokeStyle = strokeRim; ctx.stroke();
-    ctx.restore();
+    ctx.fillStyle = grad; ctx.fill(); ctx.lineWidth = 1.3; ctx.strokeStyle = strokeRim; ctx.stroke(); ctx.restore();
   }
 
   function loop() { update(); draw(); requestAnimationFrame(loop); }
